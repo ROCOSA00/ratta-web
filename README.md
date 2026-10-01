@@ -155,21 +155,38 @@ En `datos.js`, lista `galeria`, añade una línea:
 
 La galería se coloca sola en mosaico (2 columnas en móvil, 3 en ordenador).
 
-### Cambiar las fotos de la portada o de otras secciones
+### Cambiar las fotos de la portada
 
-Las fotos de la portada son `assets/img/hero-a-*.webp` (lado A, violeta) y `assets/img/hero-b-*.webp` (lado B, blanco y negro), en tres tamaños (720, 1080 y 1588 px de ancho). La forma más fácil de cambiarlas es **subir fotos nuevas con exactamente el mismo nombre** (GitHub las reemplaza). Lo mismo vale para el resto de fotos de la web.
+La portada va cambiando entre fotos de cabina en blanco y negro, con cortes secos a ritmo (124 BPM). Están en `datos.js`, lista `portada`:
+
+```js
+portada: [
+  { foto: "assets/img/portada-1.webp", enfoque: "50% 42%" },
+  { foto: "assets/img/portada-2.webp", enfoque: "50% 44%" },
+  ...
+],
+```
+
+- En el **móvil** salen todas, una detrás de otra.
+- En el **ordenador** la pantalla se parte en dos: las fotos 1, 3, 5… van a la izquierda y las 2, 4, 6… a la derecha. Por eso conviene ponerlas **por parejas** (por ejemplo: Giselz a un lado y Rocco al otro).
+- Mejor fotos **verticales**, en **blanco y negro**, de unos **1080 px de ancho**.
+- `enfoque` decide qué parte de la foto se ve si hay que recortar: el primer número es horizontal y el segundo vertical (`"50% 40%"` = centrada y un poco hacia arriba).
+
+### Cambiar el resto de fotos
+
+La forma más fácil es **subir la foto nueva con exactamente el mismo nombre** que la que quieres sustituir (GitHub la reemplaza).
 
 ---
 
 ## 7. Poner un vídeo en la portada (opcional)
 
-Ahora la portada usa dos fotos con un "crossfader" entre el lado A y el lado B. Si tenéis un vídeo corto de cabina:
+Si tenéis un vídeo corto de cabina, puede sustituir a las fotos de la portada:
 
 1. Que dure 10-20 segundos, sin sonido, en **.mp4** y que pese **menos de 4 MB** (se puede comprimir con [handbrake.fr](https://handbrake.fr), preset "Web").
 2. Créalo en `assets/video/portada.mp4` (Add file → Upload files; si la carpeta no existe, escribe `assets/video/` delante del nombre al subirlo).
 3. En `datos.js`: `portadaVideo: "assets/video/portada.mp4",`
 
-El vídeo sustituye a la foto del lado A. A quien tenga activado el ahorro de datos o el "movimiento reducido" se le sigue mostrando la foto.
+El vídeo se ve en blanco y negro, como las fotos. A quien tenga activado el ahorro de datos o el "movimiento reducido" se le siguen mostrando las fotos.
 
 ---
 
@@ -254,7 +271,7 @@ ratta-web/
     ├── js/main.js        ← animaciones e interacción (no hace falta tocarlo)
     ├── js/i18n.js        ← textos en inglés
     ├── js/vendor/        ← Lenis (scroll suave, licencia MIT)
-    ├── fonts/            ← Instrument Serif y DM Mono (licencia SIL OFL)
+    ├── fonts/            ← Inter Tight y DM Mono (licencia SIL OFL)
     ├── logo/             ← logo RATTÄ, RATTÄ + dj live sessions, RATTÄ MUSIK, isotipo (SVG)
     ├── img/              ← fotos optimizadas (.webp), imagen para compartir, iconos
     └── docs/             ← presskit en PDF (sin tarifas)
@@ -262,11 +279,11 @@ ratta-web/
 
 ### Diseño, en una línea
 
-Negro violáceo (`#0b0710`), un único acento lila sacado del presskit (`#cb6ce6`), titulares en **Instrument Serif** (serif condensada de alto contraste) y datos en **DM Mono** en mayúsculas. Grano de película, líneas de vídeo, crossfader "Lado A / Lado B" en la portada y composición en espejo para jugar con *"la energía fluye por dos bandos"*.
+Minimalista y de club: negro (`#09080b`), fotografía en blanco y negro con flash y grano, un único acento lila sacado del presskit (`#cb6ce6`) que aparece en detalles y al pasar el ratón por las fotos, titulares en **Inter Tight** (grotesca muy pesada, en mayúsculas) y datos en **DM Mono**. La pantalla partida en dos y el "B2B" juegan con *"la energía fluye por dos bandos"*.
 
 ### Para quien sepa programar
 
 - Sin build: HTML + CSS + JS sin dependencias salvo Lenis (alojado en el repo).
 - Para probarla en local: `npx http-server .` (o cualquier servidor estático) y abrir `http://localhost:8080`.
-- Las fotos se procesaron desde el presskit con ImageMagick/Pillow: duotono violeta (negro `#050109` → `#7d3aa3` → `#f7eefb`, mezclado al 75 % con la foto desaturada) y b/n con curva sigmoidal.
+- Las fotos se procesaron desde el presskit con ImageMagick/Pillow: b/n con curva sigmoidal (portada) y duotono violeta (negro `#050109` → `#7d3aa3` → `#f7eefb`, mezclado al 75 % con la foto desaturada) para el resto, que se muestra en b/n con `filter: grayscale()` y recupera el violeta al pasar el ratón.
 - Respeta `prefers-reduced-motion` (sin loader, sin scroll suave, sin cursor ni animaciones). Sin JavaScript se ve el contenido escrito en `index.html`; las listas que salen de `datos.js` (cinta de clubs, fechas, SoundCloud y galería) necesitan JavaScript.
