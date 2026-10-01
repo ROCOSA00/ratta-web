@@ -6,10 +6,12 @@
   <title>Página no encontrada · RATTA MUSIK</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0b0710">
-  <link rel="icon" href="/ratta-web/favicon.svg" type="image/svg+xml">
+  <!-- Funciona igual en Vercel (raíz "/") y en GitHub Pages ("/ratta-web/") -->
+  <script>document.write('<base href="' + (location.pathname.indexOf('/ratta-web/') === 0 ? '/ratta-web/' : '/') + '">');</script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
-    @font-face { font-family: "Instrument Serif"; src: url("/ratta-web/assets/fonts/instrument-serif-italic.woff2") format("woff2"); font-style: italic; font-display: swap; }
-    @font-face { font-family: "DM Mono"; src: url("/ratta-web/assets/fonts/dm-mono-400.woff2") format("woff2"); font-display: swap; }
+    @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-italic.woff2") format("woff2"); font-style: italic; font-display: swap; }
+    @font-face { font-family: "DM Mono"; src: url("assets/fonts/dm-mono-400.woff2") format("woff2"); font-display: swap; }
     :root { --bg: #0b0710; --ink: #f5edf8; --acc: #cb6ce6; }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -25,7 +27,7 @@
   <main>
     <h1><s>404</s><br>Fuera de pista</h1>
     <p>Esta página no existe · This page does not exist</p>
-    <a href="/ratta-web/">Volver al ambiente ↗</a>
+    <a href="./">Volver al ambiente ↗</a>
   </main>
 </body>
 </html>

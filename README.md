@@ -21,7 +21,7 @@ Es una web estática: no necesita servidor, base de datos ni instalar nada. Se p
 8. [Cambiar textos (español e inglés)](#8-cambiar-textos-español-e-inglés)
 9. [El formulario de booking](#9-el-formulario-de-booking)
 10. [Cambiar el presskit en PDF](#10-cambiar-el-presskit-en-pdf)
-11. [Publicar la web con GitHub Pages](#11-publicar-la-web-con-github-pages)
+11. [Dónde está publicada](#11-dónde-está-publicada)
 12. [Usar un dominio propio](#12-usar-un-dominio-propio-opcional)
 13. [Pendientes](#13-pendientes)
 14. [Estructura de carpetas](#14-estructura-de-carpetas)
@@ -209,16 +209,14 @@ Para actualizarlo: sube el PDF nuevo a `assets/docs/` con el mismo nombre. **Ojo
 
 ---
 
-## 11. Publicar la web con GitHub Pages
+## 11. Dónde está publicada
 
-Solo hay que hacerlo una vez, cuando el Pull Request esté fusionado en `main`:
+La web se publica sola en dos sitios cada vez que cambia la rama `main`:
 
-1. En el repositorio: **Settings → Pages**.
-2. En "Build and deployment", **Source: Deploy from a branch**.
-3. **Branch: `main`** y carpeta **`/ (root)`** → **Save**.
-4. En 1-2 minutos la web estará en **https://rocosa00.github.io/ratta-web/**
+- **Vercel (principal):** https://ratta-web.vercel.app/ — es la dirección que usan Google y la vista previa al compartir el enlace.
+- **GitHub Pages (copia):** https://rocosa00.github.io/ratta-web/ — se activa en **Settings → Pages → Source: Deploy from a branch → Branch: `main` · `/ (root)` → Save**.
 
-Cada cambio que se haga en `main` se publica solo.
+Tras cada cambio, en 1-2 minutos está publicado.
 
 **Al compartir el enlace** por WhatsApp o redes sale la imagen [`assets/img/og-image.jpg`](assets/img/og-image.jpg) con el logo y "Diseñamos el AMBIENTE". WhatsApp guarda en caché la vista previa: si cambiáis la imagen, puede tardar unos días en actualizarse.
 
@@ -226,12 +224,9 @@ Cada cambio que se haga en `main` se publica solo.
 
 ## 12. Usar un dominio propio (opcional)
 
-Si compráis un dominio (por ejemplo `rattamusik.com`):
+Si compráis un dominio (por ejemplo `rattamusik.com`), lo más sencillo es conectarlo en **Vercel → el proyecto → Settings → Domains** y seguir los pasos que indica.
 
-1. **Settings → Pages → Custom domain** → escribe el dominio → Save (GitHub crea un archivo `CNAME`).
-2. En el proveedor del dominio, configura los DNS que indica GitHub ([guía oficial](https://docs.github.com/es/pages/configuring-a-custom-domain-for-your-github-pages-site)).
-3. Sustituye `https://rocosa00.github.io/ratta-web/` por la nueva dirección en: `index.html` (líneas de `canonical`, `og:url`, `og:image`, `twitter:image` y el bloque `application/ld+json`), `robots.txt` y `sitemap.xml`.
-4. En `404.html`, cambia las rutas que empiezan por `/ratta-web/` por `/`.
+Después, sustituye `https://ratta-web.vercel.app/` por la nueva dirección en: `index.html` (líneas de `canonical`, `og:url`, `og:image`, `twitter:image` y el bloque `application/ld+json`), `robots.txt` y `sitemap.xml`. La página `404.html` no hay que tocarla: funciona en cualquier dirección.
 
 ---
 
