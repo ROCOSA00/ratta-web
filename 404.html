@@ -10,17 +10,17 @@
   <script>document.write('<base href="' + (location.pathname.indexOf('/ratta-web/') === 0 ? '/ratta-web/' : '/') + '">');</script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
-    @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-italic.woff2") format("woff2"); font-style: italic; font-display: swap; }
+    @font-face { font-family: "Inter Tight"; src: url("assets/fonts/inter-tight-var.woff2") format("woff2"); font-weight: 300 900; font-display: swap; }
     @font-face { font-family: "DM Mono"; src: url("assets/fonts/dm-mono-400.woff2") format("woff2"); font-display: swap; }
-    :root { --bg: #0b0710; --ink: #f5edf8; --acc: #cb6ce6; }
+    :root { --bg: #09080b; --ink: #f3f1f4; --acc: #cb6ce6; }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body { margin: 0; background: var(--bg); color: var(--ink); font-family: "DM Mono", ui-monospace, monospace; display: grid; place-items: center; padding: 24px 16px; text-align: center; }
-    h1 { margin: 0 0 18px; font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(64px, 18vw, 200px); line-height: .85; }
-    h1 s { color: rgba(245, 237, 248, .4); text-decoration-color: var(--acc); }
-    p { margin: 0 0 28px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(245, 237, 248, .68); }
-    a { display: inline-flex; align-items: center; height: 50px; padding: 0 26px; border-radius: 999px; background: var(--acc); color: var(--bg); text-decoration: none; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
-    a:hover { background: var(--ink); }
+    h1 { margin: 0 0 22px; font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.045em; font-size: clamp(40px, 11vw, 140px); line-height: .9; }
+    h1 s { color: rgba(243, 241, 244, .35); text-decoration-color: var(--acc); }
+    p { margin: 0 0 28px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(243, 241, 244, .64); }
+    a { display: inline-flex; align-items: center; height: 48px; padding: 0 22px; border: 1px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+    a:hover { background: var(--acc); border-color: var(--acc); }
   </style>
 </head>
 <body>
