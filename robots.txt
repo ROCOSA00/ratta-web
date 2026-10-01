@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rocosa00.github.io/ratta-web/sitemap.xml
+Sitemap: https://ratta-web.vercel.app/sitemap.xml
