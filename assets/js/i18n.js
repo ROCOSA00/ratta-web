@@ -1,0 +1,141 @@
+/* =====================================================================
+   RATTA MUSIK · textos en inglés
+   El español está escrito directamente en index.html.
+   Aquí va la traducción de cada texto (misma clave que data-i18n).
+   ===================================================================== */
+
+window.RATTA_I18N = {
+  en: {
+    "skip": "Skip to content",
+    "loader": "Loading the vibe",
+
+    "nav.duo": "The duo",
+    "nav.why": "Why two",
+    "nav.sessions": "Sessions",
+    "nav.dates": "Dates",
+    "nav.gallery": "Gallery",
+    "nav.booking": "Booking",
+    "nav.menu": "Menu",
+
+    "claim.new": "We design the",
+    "claim.old": "We play music for the",
+    "claim.big": "VIBE",
+    "hero.booking": "Booking",
+    "hero.live": "Watch live session",
+    "hero.scroll": "Scroll",
+    "hero.sideA": "Side A",
+    "hero.sideB": "Side B",
+
+    "marquee.title": "Booths we have played",
+    "marquee.label": "Heard at",
+
+    "duo.label": "The duo",
+    "duo.text": "<em>Rocco &amp; Giselz</em> join forces as Ratta Musik, an electronic duo where the energy flows from <em class=\"acc\">two sides.</em>",
+    "duo.alt": "Rocco and Giselz arm in arm on the dancefloor, flashing the peace sign",
+    "side.a.tag": "Side A",
+    "side.b.tag": "Side B",
+    "side.hint": "Tap a side",
+    "side.a.alt": "Rocco on the decks",
+    "side.b.alt": "Giselz on the decks",
+    "side.a.bio": "Urban DJ from the Maresme with a fresh, versatile, dancefloor-focused approach. His sets blend reggaeton, urban music, commercial hits, afro, house and pachanga into a current, high-energy sound.",
+    "side.b.bio": "She graduated as a DJ three years ago at Plastic Academia and has been building experience ever since, playing restaurants, bars and clubs.",
+
+    "why.label": "Two sides",
+    "why.title": "Why <em class=\"acc\">two</em> DJs instead of one?",
+    "why.1": "More energy in the booth",
+    "why.2": "A sharper read of the crowd",
+    "why.3": "Musical variety",
+    "why.4": "Creative transitions",
+    "why.5": "A striking image for the venue",
+    "why.6": "Added value for the venue",
+    "why.7": "Stand out on social media",
+    "why.8": "Visual impact and experience for the guest",
+
+    "sessions.label": "Listen",
+    "sessions.moreSc": "More on SoundCloud",
+    "sessions.moreYt": "YouTube channel",
+    "sessions.onYt": "Watch on YouTube",
+    "sessions.play": "Play",
+    "sessions.playVideo": "Play the live session on YouTube",
+    "sessions.listen": "Listen",
+
+    "dates.label": "Tour",
+    "dates.title": "Dates",
+    "dates.soon1": "Upcoming dates",
+    "dates.soon2": "very soon",
+    "dates.soonMeta": "Want us at your event?",
+    "dates.tickets": "Tickets",
+    "dates.soldout": "Sold out",
+    "dates.free": "Free entry",
+    "dates.info": "Info",
+    "dates.past": "Past dates",
+
+    "gallery.label": "Booth & dancefloor",
+    "gallery.title": "Gallery",
+    "gallery.open": "Open photo",
+
+    "booking.title": "Book the <em class=\"acc\">VIBE.</em>",
+    "booking.lead": "Clubs, venues, events, restaurants and town festivals. Tell us about your event and we will put together a tailored proposal.",
+    "booking.presskit": "Download presskit",
+    "booking.note1": "We handle travel and equipment hire.",
+    "booking.note2": "Shows in Catalonia and beyond.",
+    "booking.note3": "Terms and quotes, always on request.",
+
+    "form.name": "Name",
+    "form.type": "Event type",
+    "form.choose": "Choose an option",
+    "form.t1": "Club",
+    "form.t2": "Bar / restaurant",
+    "form.t3": "Town festival",
+    "form.t4": "Private event",
+    "form.t5": "Brand / corporate event",
+    "form.t6": "Other",
+    "form.date": "Date",
+    "form.city": "City",
+    "form.msg": "Message",
+    "form.msgPh": "Set times, capacity, crowd, whether the venue has equipment…",
+    "form.sendMail": "Send by email",
+    "form.sendWa": "Send via WhatsApp",
+    "form.missing": "Please fill in your name, event type and city.",
+    "form.openingMail": "Opening your email app with everything filled in…",
+    "form.openingWa": "Opening WhatsApp with everything filled in…",
+    "form.sending": "Sending…",
+    "form.sent": "Message sent. We will get back to you very soon.",
+    "form.error": "It could not be sent. Write to us by email or WhatsApp.",
+    "form.subject": "Booking RATTA MUSIK",
+    "form.hello": "Hi Ratta Musik! I would like to book you.",
+
+    "footer.claim": "We design the",
+    "footer.up": "Top",
+    "footer.duo": "The duo",
+    "footer.contact": "Contact",
+    "footer.presskit": "Presskit",
+    "footer.b2b": "Rocco b2b Giselz",
+
+    "lb.close": "Close"
+  },
+
+  /* Textos que se generan desde el código (en español) */
+  es: {
+    "sessions.play": "Reproducir",
+    "sessions.playVideo": "Reproducir la live session en YouTube",
+    "sessions.listen": "Escuchar",
+    "dates.soon1": "Próximas fechas",
+    "dates.soon2": "muy pronto",
+    "dates.soonMeta": "¿Quieres que pinchemos en tu evento?",
+    "dates.tickets": "Entradas",
+    "dates.soldout": "Agotado",
+    "dates.free": "Entrada libre",
+    "dates.info": "Info",
+    "dates.past": "Fechas pasadas",
+    "gallery.open": "Abrir foto",
+    "form.missing": "Rellena tu nombre, el tipo de evento y la ciudad.",
+    "form.openingMail": "Abriendo tu correo con todo rellenado…",
+    "form.openingWa": "Abriendo WhatsApp con todo rellenado…",
+    "form.sending": "Enviando…",
+    "form.sent": "Mensaje enviado. Os respondemos muy pronto.",
+    "form.error": "No se ha podido enviar. Escríbenos por email o WhatsApp.",
+    "form.subject": "Booking RATTA MUSIK",
+    "form.hello": "¡Hola Ratta Musik! Me gustaría contrataros."
+  }
+};
