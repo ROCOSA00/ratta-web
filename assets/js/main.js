@@ -225,14 +225,14 @@
   function runLoader() {
     const count = $('#loaderCount');
     const bar = $('#loaderBar');
-    const heroImg = $('.hero__layer--a img');
+    const heroImg = $('.hero__frame');
     if (reduced || !count) {
       html.classList.add('is-loaded', 'is-ready');
       return Promise.resolve();
     }
     const seen = session.get('ratta-seen') === '1';
     session.set('ratta-seen', '1');
-    const minTime = seen ? 450 : 1500;
+    const minTime = seen ? 350 : 1100;
     const imgReady = !heroImg || heroImg.complete ? Promise.resolve() : new Promise((r) => {
       heroImg.addEventListener('load', r, { once: true });
       heroImg.addEventListener('error', r, { once: true });
@@ -251,7 +251,7 @@
         p += (target - p) * (ready && el >= minTime ? 0.25 : 0.12);
         if (target === 100 && p > 99.4) p = 100;
         count.textContent = pad(Math.round(p), 3);
-        bar.style.transform = 'scaleX(' + (p / 100) + ')';
+        if (bar) bar.style.transform = 'scaleX(' + (p / 100) + ')';
         if (p >= 100) {
           html.classList.add('is-loaded');
           if (lenis) lenis.start();
@@ -269,89 +269,35 @@
     const c = $('#claim');
     if (!c) return;
     if (reduced) { c.classList.add('claim-1', 'claim-2', 'claim-3'); return; }
-    setTimeout(() => c.classList.add('claim-1'), 250);
+    setTimeout(() => c.classList.add('claim-1'), 450);
     setTimeout(() => c.classList.add('claim-2'), 1150);
-    setTimeout(() => c.classList.add('claim-3'), 1700);
+    setTimeout(() => c.classList.add('claim-3'), 1650);
   }
 
   /* -------------------------------------------------------------------
-     HERO: crossfader entre el lado A (violeta) y el lado B (b/n)
+     PORTADA: fotos de cabina con cortes secos, como un teaser de club.
+     Móvil: una sola pantalla. Ordenador: dos bandos (izquierda y derecha),
+     la derecha corta un pulso después que la izquierda.
      ------------------------------------------------------------------- */
+  const BEAT = 60000 / 124; // 124 BPM
+  const CUT_EVERY = BEAT * 8; // cada dos compases
+
   function initHero() {
     const hero = $('#inicio');
-    const b = $('#heroB');
-    const bi = $('#heroBInner');
-    const fader = $('#heroFader');
-    const knob = $('#heroKnob');
-    const tc = $('#timecode');
-    if (!hero || !b) return;
+    const stage = $('#heroStage');
+    if (!hero || !stage) return;
+
+    const frames = (D.portada || []).filter((f) => f && f.foto);
+    const left = $('.hero__side--l', stage);
+    const right = $('.hero__side--r', stage);
+    const first = $('.hero__frame', left);
+    if (frames[0] && first) {
+      if (first.getAttribute('src') !== frames[0].foto) first.src = frames[0].foto;
+      if (frames[0].enfoque) first.style.objectPosition = frames[0].enfoque;
+    }
 
     let visible = true;
     new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(hero);
-
-    // vídeo opcional en la portada (datos.js → portadaVideo)
-    const saveData = navigator.connection && navigator.connection.saveData;
-    if (D.portadaVideo && !reduced && !saveData) {
-      const img = $('.hero__layer--a img');
-      const v = document.createElement('video');
-      v.muted = true;
-      v.loop = true;
-      v.autoplay = true;
-      v.playsInline = true;
-      v.setAttribute('playsinline', '');
-      v.setAttribute('aria-hidden', 'true');
-      v.preload = 'auto';
-      v.poster = img.currentSrc || img.src;
-      v.src = D.portadaVideo;
-      v.className = 'hero__video';
-      v.addEventListener('canplay', () => { img.replaceWith(v); v.play().catch(() => {}); }, { once: true });
-      v.load();
-    }
-
-    if (!reduced) {
-      hero.classList.add('is-auto');
-      if (fine) {
-        let manual = false;
-        let split = 0.5;
-        let target = 0.5;
-        hero.addEventListener('pointermove', (e) => {
-          if (!manual) {
-            const m = new DOMMatrixReadOnly(getComputedStyle(b).transform);
-            split = clamp(m.m41 / hero.clientWidth || 0.5, 0, 1);
-            hero.classList.remove('is-auto');
-            manual = true;
-          }
-          // en pantallas apaisadas cada foto ocupa el 66 %: el mando no pasa de ahí
-          const lim = hero.clientWidth >= hero.clientHeight ? 0.34 : 0.06;
-          target = clamp(e.clientX / hero.clientWidth, lim, 1 - lim);
-        });
-        hero.addEventListener('pointerleave', () => { target = 0.5; });
-        frameHooks.push((dt) => {
-          if (!manual || !visible) return;
-          split += (target - split) * Math.min(1, 0.075 * dt);
-          const px = split * hero.clientWidth;
-          const tx = 'translate3d(' + px + 'px,0,0)';
-          b.style.transform = tx;
-          fader.style.transform = tx;
-          if (knob) knob.style.transform = tx;
-          bi.style.transform = 'translate3d(' + (-px) + 'px,0,0)';
-        });
-      }
-    }
-
-    // contador tipo cámara VHS
-    if (tc) {
-      const start = performance.now();
-      let lastFrame = -1;
-      frameHooks.push((dt, now) => {
-        if (!visible) return;
-        const f = Math.floor(((now - start) / 1000) * 25);
-        if (f === lastFrame) return;
-        lastFrame = f;
-        const s = Math.floor(f / 25);
-        tc.textContent = pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s / 60) % 60) + ':' + pad(s % 60) + ':' + pad(f % 25);
-      });
-    }
 
     const play = $('#heroPlay');
     if (play) {
@@ -361,6 +307,89 @@
         scrollToTarget($('#sesiones'));
       });
     }
+
+    // vídeo opcional en la portada (datos.js → portadaVideo): sustituye a las fotos
+    const saveData = navigator.connection && navigator.connection.saveData;
+    if (D.portadaVideo && !reduced && !saveData) {
+      const v = document.createElement('video');
+      v.muted = true;
+      v.loop = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      v.setAttribute('playsinline', '');
+      v.setAttribute('aria-hidden', 'true');
+      v.preload = 'auto';
+      v.poster = first ? first.src : '';
+      v.src = D.portadaVideo;
+      v.className = 'hero__video';
+      v.addEventListener('canplay', () => {
+        stage.prepend(v);
+        stage.classList.add('has-video');
+        v.play().catch(() => {});
+      }, { once: true });
+      v.load();
+      return;
+    }
+
+    const wide = () => window.matchMedia('(min-aspect-ratio: 1/1) and (min-width: 700px)').matches;
+    const decks = [];
+    const setup = () => {
+      decks.length = 0;
+      if (wide() && frames.length > 1) {
+        decks.push({ el: left, list: frames.filter((_, k) => k % 2 === 0), i: 0, delay: 0 });
+        decks.push({ el: right, list: frames.filter((_, k) => k % 2 === 1), i: 0, delay: BEAT });
+        if (!$('.hero__frame', right)) show(decks[1], 0, false);
+      } else {
+        decks.push({ el: left, list: frames, i: 0, delay: 0 });
+      }
+    };
+
+    function show(deck, idx, flash) {
+      const f = deck.list[idx];
+      if (!f) return;
+      const img = new Image();
+      img.className = 'hero__frame';
+      img.alt = '';
+      img.decoding = 'async';
+      img.src = f.foto;
+      if (f.enfoque) img.style.objectPosition = f.enfoque;
+      const swap = () => {
+        const old = $$('.hero__frame', deck.el);
+        deck.el.appendChild(img);
+        img.getBoundingClientRect();
+        img.classList.add('is-on');
+        old.forEach((o) => { o.classList.remove('is-on'); setTimeout(() => o.remove(), 60); });
+        if (flash) {
+          deck.el.classList.remove('is-flash');
+          void deck.el.offsetWidth;
+          deck.el.classList.add('is-flash');
+        }
+        deck.i = idx;
+      };
+      if (img.decode) img.decode().then(swap).catch(swap);
+      else img.onload = swap;
+    }
+
+    if (reduced || frames.length < 2) { setup(); return; }
+
+    // las demás fotos se cargan cuando la página ya ha terminado
+    const start = () => {
+      setup();
+      setInterval(() => {
+        if (!visible || document.hidden) return;
+        decks.forEach((d) => setTimeout(() => show(d, (d.i + 1) % d.list.length, true), d.delay));
+      }, CUT_EVERY);
+    };
+    if (document.readyState === 'complete') setTimeout(start, 600);
+    else window.addEventListener('load', () => setTimeout(start, 600), { once: true });
+
+    let wasWide = wide();
+    window.addEventListener('resize', () => {
+      if (wide() === wasWide) return;
+      wasWide = wide();
+      $$('.hero__frame', right).forEach((o) => o.remove());
+      setup();
+    });
   }
 
   /* -------------------------------------------------------------------

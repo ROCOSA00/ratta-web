@@ -19,9 +19,9 @@ window.RATTA_I18N = {
 
     "claim.new": "We design the",
     "claim.old": "We play music for the",
-    "claim.big": "VIBE",
+    "claim.big": "vibe",
     "hero.booking": "Booking",
-    "hero.live": "Watch live session",
+    "hero.live": "Live session",
     "hero.scroll": "Scroll",
     "hero.sideA": "Side A",
     "hero.sideB": "Side B",
