@@ -31,11 +31,9 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <link rel="preload" href="assets/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-tight-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" type="image/webp" href="assets/img/hero-a-1080.webp"
-        imagesrcset="assets/img/hero-a-720.webp 720w, assets/img/hero-a-1080.webp 1080w, assets/img/hero-a-1588.webp 1588w" imagesizes="100vw" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" href="assets/img/portada-1.webp" fetchpriority="high">
 
   <link rel="stylesheet" href="assets/css/styles.css">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
@@ -81,12 +79,8 @@
   <div class="loader__half loader__half--l"></div>
   <div class="loader__half loader__half--r"></div>
   <div class="loader__inner">
-    <svg class="loader__logo" viewBox="0 0 372.9 152.4"><use href="#logo-ratta"/></svg>
-    <div class="loader__meta mono">
-      <span data-i18n="loader">Cargando el ambiente</span>
-      <span class="loader__count" id="loaderCount">000</span>
-    </div>
-    <div class="loader__bar"><span id="loaderBar"></span></div>
+    <svg class="loader__iso" viewBox="0 0 140 151"><use href="#logo-iso"/></svg>
+    <span class="loader__count mono" id="loaderCount">000</span>
   </div>
 </div>
 
@@ -108,7 +102,7 @@
       <span aria-hidden="true">/</span>
       <button type="button" class="lang__btn" data-lang="en" aria-pressed="false">EN</button>
     </div>
-    <a class="btn btn--sm btn--accent header__cta" href="#booking" data-magnetic data-i18n="nav.booking">Booking</a>
+    <a class="btn btn--sm btn--solid header__cta" href="#booking" data-magnetic data-i18n="nav.booking">Booking</a>
     <button class="burger mono" type="button" id="burger" aria-expanded="false" aria-controls="menu">
       <span class="burger__label" data-i18n="nav.menu">Menú</span>
       <span class="burger__lines" aria-hidden="true"><i></i><i></i></span>
@@ -136,61 +130,38 @@
 
 <main id="contenido">
 
-  <!-- ============ HERO ============ -->
+  <!-- ============ PORTADA ============ -->
   <section class="hero" id="inicio" aria-label="RATTA MUSIK">
-    <div class="hero__media" id="heroMedia" aria-hidden="true">
-      <div class="hero__layer hero__layer--a">
-        <img src="assets/img/hero-a-1080.webp"
-             srcset="assets/img/hero-a-720.webp 720w, assets/img/hero-a-1080.webp 1080w, assets/img/hero-a-1588.webp 1588w"
-             sizes="100vw" width="1588" height="2823" alt="" fetchpriority="high" decoding="async">
+    <!-- Las fotos de la portada se cambian en datos.js (portada). Esta primera se ve también sin JavaScript. -->
+    <div class="hero__stage" id="heroStage" aria-hidden="true">
+      <div class="hero__side hero__side--l">
+        <img class="hero__frame is-on" src="assets/img/portada-1.webp" width="1080" height="1920" alt="" fetchpriority="high" decoding="async" style="--fy:42%">
       </div>
-      <div class="hero__layer hero__layer--b" id="heroB">
-        <div class="hero__layer-inner" id="heroBInner">
-          <img src="assets/img/hero-b-1080.webp"
-               srcset="assets/img/hero-b-720.webp 720w, assets/img/hero-b-1080.webp 1080w, assets/img/hero-b-1588.webp 1588w"
-               sizes="100vw" width="1588" height="2823" alt="" decoding="async">
-        </div>
-      </div>
-      <div class="hero__fader" id="heroFader"></div>
-      <div class="hero__scan"></div>
+      <div class="hero__side hero__side--r"></div>
       <div class="hero__shade"></div>
     </div>
 
-    <div class="hero__rec mono" aria-hidden="true">
-      <span class="hero__rec-dot"></span> REC <span class="hero__tc" id="timecode">00:00:00:00</span>
-    </div>
-
     <div class="hero__content">
+      <p class="claim" id="claim">
+        <s class="claim__old"><span data-i18n="claim.old">Ponemos música de</span></s>
+        <span class="claim__new"><span data-i18n="claim.new">Diseñamos el</span> <em data-i18n="claim.big">ambiente</em></span>
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="#booking" data-magnetic><span data-i18n="hero.booking">Booking</span> <span aria-hidden="true">↗</span></a>
+        <a class="btn btn--ghost" href="#sesiones" id="heroPlay" data-magnetic>
+          <span class="btn__play" aria-hidden="true"></span><span data-i18n="hero.live">Live session</span>
+        </a>
+      </div>
       <h1 class="hero__brand">
         <span class="sr-only">RATTA MUSIK · dj live sessions</span>
         <svg class="hero__logo" viewBox="0 0 372.9 152.4" aria-hidden="true"><use href="#logo-ratta"/></svg>
-        <span class="hero__sub" aria-hidden="true">
-          <svg class="hero__djls" viewBox="0 0 157.2 28.1"><use href="#logo-djls"/></svg>
-          <svg class="hero__musik" viewBox="0 0 58.6 18.2"><use href="#logo-musik"/></svg>
+        <span class="hero__sub mono" aria-hidden="true">
+          <svg viewBox="0 0 157.2 28.1"><use href="#logo-djls"/></svg>
+          <span>Rocco b2b Giselz</span>
+          <svg viewBox="0 0 58.6 18.2"><use href="#logo-musik"/></svg>
         </span>
       </h1>
-
-      <div class="hero__bottom">
-        <p class="claim" id="claim">
-          <span class="claim__new" data-i18n="claim.new">Diseñamos el</span>
-          <span class="claim__row">
-            <s class="claim__old"><span data-i18n="claim.old">Ponemos música de</span></s>
-            <span class="claim__big" data-i18n="claim.big">AMBIENTE</span>
-          </span>
-        </p>
-        <div class="hero__actions">
-          <a class="btn btn--accent" href="#booking" data-magnetic><span data-i18n="hero.booking">Booking</span> <span aria-hidden="true">↗</span></a>
-          <a class="btn btn--ghost" href="#sesiones" id="heroPlay" data-magnetic>
-            <span class="btn__play" aria-hidden="true"></span><span data-i18n="hero.live">Ver live session</span>
-          </a>
-        </div>
-      </div>
     </div>
-
-    <div class="hero__sides mono" aria-hidden="true">
-      <span data-i18n="hero.sideA">Lado A</span><span class="hero__track"></span><span data-i18n="hero.sideB">Lado B</span>
-    </div>
-    <div class="hero__knob" id="heroKnob" aria-hidden="true"><span><i></i><i></i><i></i></span></div>
   </section>
 
   <!-- ============ MARQUESINA DE CLUBS ============ -->
@@ -217,7 +188,7 @@
           <img src="assets/img/duo-retrato-640.webp"
                srcset="assets/img/duo-retrato-640.webp 640w, assets/img/duo-retrato-1066.webp 1066w"
                sizes="(min-width: 900px) 34vw, 70vw" width="1066" height="1600" loading="lazy" decoding="async"
-               alt="Rocco y Giselz abrazados en la pista, haciendo el signo de la paz" data-i18n-alt="duo.alt">
+               alt="Rocco y Giselz abrazados en la pista, haciendo el signo de la paz" data-i18n-alt="duo.alt" class="bw">
         </div>
         <figcaption class="mono"><span>A</span><span class="duo__cap-line"></span><span>B</span></figcaption>
       </figure>
@@ -288,7 +259,7 @@
       <div class="video" id="video" data-reveal="clip">
         <button class="video__facade" type="button" id="videoFacade" data-cursor="play" aria-label="Reproducir la live session en YouTube">
           <img id="videoPoster" src="assets/img/live-session-1184.webp" srcset="assets/img/live-session-640.webp 640w, assets/img/live-session-1184.webp 1184w"
-               sizes="(min-width: 900px) 62vw, 100vw" width="1184" height="662" loading="lazy" decoding="async" alt="">
+               sizes="(min-width: 900px) 62vw, 100vw" width="1184" height="662" loading="lazy" decoding="async" alt="" class="bw">
           <span class="video__play" aria-hidden="true">
             <svg class="video__ring" viewBox="0 0 120 120"><defs><path id="ringPath" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
               <text><textPath href="#ringPath">PLAY · LIVE SESSION · PLAY · LIVE SESSION ·</textPath></text></svg>
@@ -360,7 +331,7 @@
         <a class="booking__mail" href="mailto:itsrattamusik@gmail.com" id="bookingMail" data-cursor="hover">itsrattamusik@gmail.com</a>
 
         <div class="booking__btns">
-          <a class="btn btn--accent" id="waBtn" href="https://wa.me/34652932722" target="_blank" rel="noopener" data-magnetic>
+          <a class="btn btn--solid" id="waBtn" href="https://wa.me/34652932722" target="_blank" rel="noopener" data-magnetic>
             <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></svg>
             <span>WhatsApp · <span id="waNumber">652 932 722</span></span>
           </a>
@@ -411,7 +382,7 @@
         </label>
         <p class="form__status mono" id="formStatus" role="status" aria-live="polite"></p>
         <div class="form__actions">
-          <button class="btn btn--accent" type="submit" data-via="email" data-magnetic><span data-i18n="form.sendMail">Enviar por email</span> <span aria-hidden="true">↗</span></button>
+          <button class="btn btn--solid" type="submit" data-via="email" data-magnetic><span data-i18n="form.sendMail">Enviar por email</span> <span aria-hidden="true">↗</span></button>
           <button class="btn btn--ghost" type="submit" data-via="whatsapp" data-magnetic><span data-i18n="form.sendWa">Enviar por WhatsApp</span></button>
         </div>
       </form>

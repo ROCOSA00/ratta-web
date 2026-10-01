@@ -32,10 +32,28 @@ window.RATTA = {
   /* [PENDIENTE: no hay ninguna fecha en el presskit. Añadidlas aquí cuando estén confirmadas.] */
 
   /* -------------------------------------------------------------------
+     PORTADA: FOTOS QUE VAN CAMBIANDO
+     En el móvil salen todas, una detrás de otra.
+     En el ordenador la pantalla se parte en dos: las fotos 1, 3, 5…
+     van a la izquierda y las 2, 4, 6… a la derecha (por eso van por parejas).
+     foto:    ruta de la imagen (vertical, en blanco y negro, ~1080 px de ancho)
+     enfoque: qué parte de la foto se ve si hay que recortar
+              ("50% 40%" = centrada y un poco hacia arriba)
+     ------------------------------------------------------------------- */
+  portada: [
+    { foto: "assets/img/portada-1.webp", enfoque: "50% 42%" },
+    { foto: "assets/img/portada-2.webp", enfoque: "50% 44%" },
+    { foto: "assets/img/portada-3.webp", enfoque: "50% 46%" },
+    { foto: "assets/img/portada-4.webp", enfoque: "50% 38%" },
+    { foto: "assets/img/portada-5.webp", enfoque: "58% 45%" },
+    { foto: "assets/img/portada-6.webp", enfoque: "50% 35%" },
+  ],
+
+  /* -------------------------------------------------------------------
      PORTADA EN VÍDEO (opcional)
-     Ahora la portada usa fotos. Si tenéis un vídeo corto de cabina
-     (10-20 s, sin sonido, .mp4, menos de 4 MB), subidlo a assets/video/
-     y escribid aquí su ruta, por ejemplo "assets/video/portada.mp4".
+     Si tenéis un vídeo corto de cabina (10-20 s, sin sonido, .mp4,
+     menos de 4 MB), subidlo a assets/video/ y escribid aquí su ruta,
+     por ejemplo "assets/video/portada.mp4". Sustituye a las fotos.
      [PENDIENTE: vídeo corto para la portada]
      ------------------------------------------------------------------- */
   portadaVideo: "",
