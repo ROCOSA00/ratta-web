@@ -225,7 +225,7 @@
   function runLoader() {
     const count = $('#loaderCount');
     const bar = $('#loaderBar');
-    const heroImg = $('.hero__frame');
+    const heroImg = $('.hero__pic--l img');
     if (reduced || !count) {
       html.classList.add('is-loaded', 'is-ready');
       return Promise.resolve();
@@ -275,29 +275,27 @@
   }
 
   /* -------------------------------------------------------------------
-     PORTADA: fotos de cabina con cortes secos, como un teaser de club.
-     Móvil: una sola pantalla. Ordenador: dos bandos (izquierda y derecha),
-     la derecha corta un pulso después que la izquierda.
+     PORTADA: fotos fijas (datos.js → portada) o vídeo opcional
      ------------------------------------------------------------------- */
-  const BEAT = 60000 / 124; // 124 BPM
-  const CUT_EVERY = BEAT * 8; // cada dos compases
-
   function initHero() {
     const hero = $('#inicio');
-    const stage = $('#heroStage');
-    if (!hero || !stage) return;
+    const media = $('#heroMedia');
+    if (!hero || !media) return;
 
-    const frames = (D.portada || []).filter((f) => f && f.foto);
-    const left = $('.hero__side--l', stage);
-    const right = $('.hero__side--r', stage);
-    const first = $('.hero__frame', left);
-    if (frames[0] && first) {
-      if (first.getAttribute('src') !== frames[0].foto) first.src = frames[0].foto;
-      if (frames[0].enfoque) first.style.objectPosition = frames[0].enfoque;
-    }
-
-    let visible = true;
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(hero);
+    const P = D.portada || {};
+    const setPic = (sel, f, isSource) => {
+      if (!f || !f.foto) return;
+      const pic = $(sel, media);
+      if (!pic) return;
+      const el = isSource ? $('source', pic) : $('img', pic);
+      if (isSource) el.srcset = f.foto;
+      else el.src = f.foto;
+      if (f.enfoque) $('img', pic).style.setProperty('--pos', f.enfoque);
+    };
+    const wide = window.matchMedia('(min-aspect-ratio: 1/1) and (min-width: 700px)').matches;
+    setPic('.hero__pic--l', P.izquierda, true);
+    setPic('.hero__pic--r', P.derecha, true);
+    if (!wide) setPic('.hero__pic--l', P.movil, false);
 
     const play = $('#heroPlay');
     if (play) {
@@ -319,77 +317,15 @@
       v.setAttribute('playsinline', '');
       v.setAttribute('aria-hidden', 'true');
       v.preload = 'auto';
-      v.poster = first ? first.src : '';
       v.src = D.portadaVideo;
       v.className = 'hero__video';
       v.addEventListener('canplay', () => {
-        stage.prepend(v);
-        stage.classList.add('has-video');
+        media.prepend(v);
+        media.classList.add('has-video');
         v.play().catch(() => {});
       }, { once: true });
       v.load();
-      return;
     }
-
-    const wide = () => window.matchMedia('(min-aspect-ratio: 1/1) and (min-width: 700px)').matches;
-    const decks = [];
-    const setup = () => {
-      decks.length = 0;
-      if (wide() && frames.length > 1) {
-        decks.push({ el: left, list: frames.filter((_, k) => k % 2 === 0), i: 0, delay: 0 });
-        decks.push({ el: right, list: frames.filter((_, k) => k % 2 === 1), i: 0, delay: BEAT });
-        if (!$('.hero__frame', right)) show(decks[1], 0, false);
-      } else {
-        decks.push({ el: left, list: frames, i: 0, delay: 0 });
-      }
-    };
-
-    function show(deck, idx, flash) {
-      const f = deck.list[idx];
-      if (!f) return;
-      const img = new Image();
-      img.className = 'hero__frame';
-      img.alt = '';
-      img.decoding = 'async';
-      img.src = f.foto;
-      if (f.enfoque) img.style.objectPosition = f.enfoque;
-      const swap = () => {
-        const old = $$('.hero__frame', deck.el);
-        deck.el.appendChild(img);
-        img.getBoundingClientRect();
-        img.classList.add('is-on');
-        old.forEach((o) => { o.classList.remove('is-on'); setTimeout(() => o.remove(), 60); });
-        if (flash) {
-          deck.el.classList.remove('is-flash');
-          void deck.el.offsetWidth;
-          deck.el.classList.add('is-flash');
-        }
-        deck.i = idx;
-      };
-      if (img.decode) img.decode().then(swap).catch(swap);
-      else img.onload = swap;
-    }
-
-    if (reduced || frames.length < 2) { setup(); return; }
-
-    // las demás fotos se cargan cuando la página ya ha terminado
-    const start = () => {
-      setup();
-      setInterval(() => {
-        if (!visible || document.hidden) return;
-        decks.forEach((d) => setTimeout(() => show(d, (d.i + 1) % d.list.length, true), d.delay));
-      }, CUT_EVERY);
-    };
-    if (document.readyState === 'complete') setTimeout(start, 600);
-    else window.addEventListener('load', () => setTimeout(start, 600), { once: true });
-
-    let wasWide = wide();
-    window.addEventListener('resize', () => {
-      if (wide() === wasWide) return;
-      wasWide = wide();
-      $$('.hero__frame', right).forEach((o) => o.remove());
-      setup();
-    });
   }
 
   /* -------------------------------------------------------------------
@@ -561,38 +497,6 @@
     });
     if (fine) wrap.addEventListener('pointerleave', () => set(null));
     wrap.addEventListener('focusout', (e) => { if (!wrap.contains(e.relatedTarget)) set(null); });
-  }
-
-  /* -------------------------------------------------------------------
-     ¿POR QUÉ DOS? imagen que sigue al ratón
-     ------------------------------------------------------------------- */
-  function initWhy() {
-    const list = $('#whyList');
-    const float = $('#whyFloat');
-    if (!list || !float || !fine || reduced) return;
-    const img = $('img', float);
-    let mx = 0;
-    let my = 0;
-    let fx = 0;
-    let fy = 0;
-    let on = false;
-    list.addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; });
-    $$('.why__item', list).forEach((li) => {
-      li.addEventListener('pointerenter', (e) => {
-        if (!on) { fx = e.clientX; fy = e.clientY; }
-        if (li.dataset.img && img.getAttribute('src') !== li.dataset.img) img.src = li.dataset.img;
-        on = true;
-        float.classList.add('is-on');
-      });
-    });
-    list.addEventListener('pointerleave', () => { on = false; float.classList.remove('is-on'); });
-    frameHooks.push((dt) => {
-      if (!on) return;
-      fx += (mx - fx) * Math.min(1, 0.14 * dt);
-      fy += (my - fy) * Math.min(1, 0.14 * dt);
-      const rot = clamp((mx - fx) * 0.05, -8, 8);
-      float.style.transform = 'translate3d(' + (fx + 30) + 'px,' + (fy - 160) + 'px,0) rotate(' + rot + 'deg)';
-    });
   }
 
   /* -------------------------------------------------------------------
@@ -950,7 +854,6 @@
   initHero();
   initCursor();
   initSides();
-  initWhy();
   initParallax();
   initForm();
 

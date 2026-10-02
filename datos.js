@@ -32,22 +32,18 @@ window.RATTA = {
   /* [PENDIENTE: no hay ninguna fecha en el presskit. Añadidlas aquí cuando estén confirmadas.] */
 
   /* -------------------------------------------------------------------
-     PORTADA: FOTOS QUE VAN CAMBIANDO
-     En el móvil salen todas, una detrás de otra.
-     En el ordenador la pantalla se parte en dos: las fotos 1, 3, 5…
-     van a la izquierda y las 2, 4, 6… a la derecha (por eso van por parejas).
-     foto:    ruta de la imagen (vertical, en blanco y negro, ~1080 px de ancho)
+     PORTADA
+     En el ordenador la pantalla se parte en dos: una foto a cada lado.
+     En el móvil se ve una sola foto.
+     foto:    ruta de la imagen (vertical, ~1080 px de ancho; se ve en b/n)
      enfoque: qué parte de la foto se ve si hay que recortar
               ("50% 40%" = centrada y un poco hacia arriba)
      ------------------------------------------------------------------- */
-  portada: [
-    { foto: "assets/img/portada-1.webp", enfoque: "50% 42%" },
-    { foto: "assets/img/portada-2.webp", enfoque: "50% 44%" },
-    { foto: "assets/img/portada-3.webp", enfoque: "50% 46%" },
-    { foto: "assets/img/portada-4.webp", enfoque: "50% 38%" },
-    { foto: "assets/img/portada-5.webp", enfoque: "58% 45%" },
-    { foto: "assets/img/portada-6.webp", enfoque: "50% 35%" },
-  ],
+  portada: {
+    izquierda: { foto: "assets/img/portada-izquierda.webp", enfoque: "50% 46%" },
+    derecha:   { foto: "assets/img/portada-derecha.webp",   enfoque: "50% 36%" },
+    movil:     { foto: "assets/img/portada-movil.webp",     enfoque: "50% 32%" },
+  },
 
   /* -------------------------------------------------------------------
      PORTADA EN VÍDEO (opcional)
