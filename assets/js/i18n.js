@@ -95,13 +95,11 @@ window.RATTA_I18N = {
     "form.msg": "Message",
     "form.msgPh": "Set times, capacity, crowd, whether the venue has equipment…",
     "form.sendMail": "Send by email",
-    "form.sendWa": "Send via WhatsApp",
     "form.missing": "Please fill in your name, event type and city.",
     "form.openingMail": "Opening your email app with everything filled in…",
-    "form.openingWa": "Opening WhatsApp with everything filled in…",
     "form.sending": "Sending…",
     "form.sent": "Message sent. We will get back to you very soon.",
-    "form.error": "It could not be sent. Write to us by email or WhatsApp.",
+    "form.error": "It could not be sent. Write to us by email.",
     "form.subject": "Booking RATTA MUSIK",
     "form.hello": "Hi Ratta Musik! I would like to book you.",
 
@@ -131,10 +129,9 @@ window.RATTA_I18N = {
     "gallery.open": "Abrir foto",
     "form.missing": "Rellena tu nombre, el tipo de evento y la ciudad.",
     "form.openingMail": "Abriendo tu correo con todo rellenado…",
-    "form.openingWa": "Abriendo WhatsApp con todo rellenado…",
     "form.sending": "Enviando…",
     "form.sent": "Mensaje enviado. Os respondemos muy pronto.",
-    "form.error": "No se ha podido enviar. Escríbenos por email o WhatsApp.",
+    "form.error": "No se ha podido enviar. Escríbenos por email.",
     "form.subject": "Booking RATTA MUSIK",
     "form.hello": "¡Hola Ratta Musik! Me gustaría contrataros."
   }

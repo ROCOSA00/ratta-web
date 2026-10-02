@@ -13,7 +13,7 @@ Es una web estática: no necesita servidor, base de datos ni instalar nada. Se p
 
 1. [Cómo editar un archivo desde el móvil o el ordenador](#1-cómo-editar-un-archivo-sin-instalar-nada)
 2. [Añadir o cambiar fechas](#2-añadir-o-cambiar-fechas)
-3. [Cambiar enlaces, email o WhatsApp](#3-cambiar-enlaces-email-o-whatsapp)
+3. [Cambiar enlaces o email](#3-cambiar-enlaces-o-email)
 4. [Cambiar la live session de YouTube y los SoundCloud](#4-cambiar-la-live-session-de-youtube-y-los-soundcloud)
 5. [Cambiar los clubs de la cinta](#5-cambiar-los-clubs-de-la-cinta-que-se-mueve)
 6. [Cambiar o añadir fotos](#6-cambiar-o-añadir-fotos)
@@ -73,14 +73,13 @@ fechas: [
 
 ---
 
-## 3. Cambiar enlaces, email o WhatsApp
+## 3. Cambiar enlaces o email
 
 En [`datos.js`](datos.js):
 
 ```js
 contacto: {
   email: "itsrattamusik@gmail.com",
-  whatsapp: "34652932722",        // con el 34 delante, sin espacios ni + (no se muestra en la web)
 },
 
 enlaces: {
@@ -177,7 +176,6 @@ La web se abre en español. Si el navegador del visitante no está en español, 
 GitHub Pages no tiene servidor, así que el formulario funciona así:
 
 - **"Enviar por email"** abre la app de correo del visitante con el email a `itsrattamusik@gmail.com` ya escrito (nombre, tipo de evento, fecha, ciudad y mensaje). Solo tiene que darle a enviar.
-- **"Enviar por WhatsApp"** abre WhatsApp con el mismo mensaje, dirigido al número de `contacto.whatsapp` (el número no aparece escrito en la web).
 
 **Opcional, recibir el formulario sin que salga de la web:**
 
