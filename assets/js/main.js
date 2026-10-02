@@ -121,9 +121,6 @@
     if (C.email) {
       $$('[data-contact="email"], #bookingMail').forEach((a) => { a.href = 'mailto:' + C.email; a.textContent = C.email; });
     }
-    if (C.whatsapp) {
-      $$('[data-contact="whatsapp"], #waBtn').forEach((a) => { a.href = 'https://wa.me/' + C.whatsapp; });
-    }
     const y = $('#year');
     if (y) y.textContent = String(new Date().getFullYear());
   }
@@ -742,8 +739,6 @@
     const form = $('#bookingForm');
     if (!form) return;
     const status = $('#formStatus');
-    let via = 'email';
-    $$('button[type="submit"]', form).forEach((b) => b.addEventListener('click', () => { via = b.dataset.via; }));
     $$('input, select, textarea', form).forEach((el) => el.addEventListener('input', () => el.closest('.field').classList.remove('is-invalid')));
 
     const say = (msg, err) => { status.textContent = msg; status.classList.toggle('is-error', !!err); };
@@ -755,7 +750,6 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (e.submitter && e.submitter.dataset.via) via = e.submitter.dataset.via;
       const data = {};
       new FormData(form).forEach((v, k) => { data[k] = String(v).trim(); });
 
@@ -786,11 +780,6 @@
       const C = D.contacto || {};
       const endpoint = D.formulario && D.formulario.endpoint;
 
-      if (via === 'whatsapp') {
-        say(tr('form.openingWa'));
-        window.open('https://wa.me/' + C.whatsapp + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
-        return;
-      }
       if (endpoint) {
         say(tr('form.sending'));
         fetch(endpoint, {

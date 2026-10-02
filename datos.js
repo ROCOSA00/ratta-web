@@ -32,17 +32,14 @@ window.RATTA = {
   /* [PENDIENTE: no hay ninguna fecha en el presskit. Añadidlas aquí cuando estén confirmadas.] */
 
   /* -------------------------------------------------------------------
-     2. CONTACTO Y BOOKING
-     whatsapp: número con prefijo de país, sin espacios ni el signo +
-               (no se muestra escrito en la web: solo lo usa el botón de WhatsApp)
+     2. CONTACTO Y BOOKING (el booking va siempre por email)
      ------------------------------------------------------------------- */
   contacto: {
     email: "itsrattamusik@gmail.com",
-    whatsapp: "34652932722",
   },
 
   /* Formulario de booking.
-     Vacío (""): el formulario prepara el email o el WhatsApp con los datos
+     Vacío (""): el formulario prepara el email con los datos
      y solo hay que darle a enviar.
      Si algún día creáis una cuenta gratuita en formspree.io, pegad aquí
      vuestro enlace (tipo "https://formspree.io/f/xxxxxxx") y los mensajes
