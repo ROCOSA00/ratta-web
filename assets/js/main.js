@@ -225,18 +225,16 @@
   function runLoader() {
     const count = $('#loaderCount');
     const bar = $('#loaderBar');
-    const heroImg = $('.hero__pic--l img');
+
     if (reduced || !count) {
       html.classList.add('is-loaded', 'is-ready');
+      hero3dReady.then(() => { if (hero3d) hero3d.start(); });
       return Promise.resolve();
     }
     const seen = session.get('ratta-seen') === '1';
     session.set('ratta-seen', '1');
     const minTime = seen ? 350 : 1100;
-    const imgReady = !heroImg || heroImg.complete ? Promise.resolve() : new Promise((r) => {
-      heroImg.addEventListener('load', r, { once: true });
-      heroImg.addEventListener('error', r, { once: true });
-    });
+    const imgReady = hero3dReady;
     const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     let ready = false;
     Promise.race([Promise.all([imgReady, fontsReady]), new Promise((r) => setTimeout(r, 3500))]).then(() => { ready = true; });
@@ -254,6 +252,7 @@
         if (bar) bar.style.transform = 'scaleX(' + (p / 100) + ')';
         if (p >= 100) {
           html.classList.add('is-loaded');
+          if (hero3d) hero3d.start();
           if (lenis) lenis.start();
           setTimeout(() => html.classList.add('is-ready'), 1150);
           resolve();
@@ -275,27 +274,22 @@
   }
 
   /* -------------------------------------------------------------------
-     PORTADA: fotos fijas (datos.js → portada) o vídeo opcional
+     PORTADA: logo RATTÄ MUSIK en 3D (assets/js/hero3d.js, Three.js).
+     Si el navegador no tiene WebGL o falla, se queda el logo plano.
      ------------------------------------------------------------------- */
+  let hero3d = null;
+  let hero3dReady = Promise.resolve();
+
+  function webglOK() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
+    } catch (e) { return false; }
+  }
+
   function initHero() {
     const hero = $('#inicio');
-    const media = $('#heroMedia');
-    if (!hero || !media) return;
-
-    const P = D.portada || {};
-    const setPic = (sel, f, isSource) => {
-      if (!f || !f.foto) return;
-      const pic = $(sel, media);
-      if (!pic) return;
-      const el = isSource ? $('source', pic) : $('img', pic);
-      if (isSource) el.srcset = f.foto;
-      else el.src = f.foto;
-      if (f.enfoque) $('img', pic).style.setProperty('--pos', f.enfoque);
-    };
-    const wide = window.matchMedia('(min-aspect-ratio: 1/1) and (min-width: 700px)').matches;
-    setPic('.hero__pic--l', P.izquierda, true);
-    setPic('.hero__pic--r', P.derecha, true);
-    if (!wide) setPic('.hero__pic--l', P.movil, false);
+    if (!hero) return;
 
     const play = $('#heroPlay');
     if (play) {
@@ -306,26 +300,25 @@
       });
     }
 
-    // vídeo opcional en la portada (datos.js → portadaVideo): sustituye a las fotos
-    const saveData = navigator.connection && navigator.connection.saveData;
-    if (D.portadaVideo && !reduced && !saveData) {
-      const v = document.createElement('video');
-      v.muted = true;
-      v.loop = true;
-      v.autoplay = true;
-      v.playsInline = true;
-      v.setAttribute('playsinline', '');
-      v.setAttribute('aria-hidden', 'true');
-      v.preload = 'auto';
-      v.src = D.portadaVideo;
-      v.className = 'hero__video';
-      v.addEventListener('canplay', () => {
-        media.prepend(v);
-        media.classList.add('has-video');
-        v.play().catch(() => {});
-      }, { once: true });
-      v.load();
-    }
+    const canvas = $('#heroCanvas');
+    const wordmark = $('#logo-ratta path');
+    const musik = $('#logo-musik path');
+    if (!canvas || !wordmark || !webglOK()) return;
+
+    const url = new URL('assets/js/hero3d.js', document.baseURI).href;
+    hero3dReady = import(url).then((mod) => {
+      hero3d = mod.initHero3D({
+        canvas,
+        hero,
+        anchor: $('.hero__brand', hero),
+        wordmark: wordmark.getAttribute('d'),
+        musik: musik ? musik.getAttribute('d') : '',
+        reduced,
+        // el logo plano se queda hasta que el 3D pinta su primer fotograma
+        onShow: () => hero.classList.add('has-3d'),
+      });
+      if (html.classList.contains('is-loaded')) hero3d.start();
+    }).catch(() => { /* sin 3D: se queda el logo plano */ });
   }
 
   /* -------------------------------------------------------------------
