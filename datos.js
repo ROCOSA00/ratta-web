@@ -32,29 +32,6 @@ window.RATTA = {
   /* [PENDIENTE: no hay ninguna fecha en el presskit. Añadidlas aquí cuando estén confirmadas.] */
 
   /* -------------------------------------------------------------------
-     PORTADA
-     En el ordenador la pantalla se parte en dos: una foto a cada lado.
-     En el móvil se ve una sola foto.
-     foto:    ruta de la imagen (vertical, ~1080 px de ancho; se ve en b/n)
-     enfoque: qué parte de la foto se ve si hay que recortar
-              ("50% 40%" = centrada y un poco hacia arriba)
-     ------------------------------------------------------------------- */
-  portada: {
-    izquierda: { foto: "assets/img/portada-izquierda.webp", enfoque: "50% 46%" },
-    derecha:   { foto: "assets/img/portada-derecha.webp",   enfoque: "50% 36%" },
-    movil:     { foto: "assets/img/portada-movil.webp",     enfoque: "50% 32%" },
-  },
-
-  /* -------------------------------------------------------------------
-     PORTADA EN VÍDEO (opcional)
-     Si tenéis un vídeo corto de cabina (10-20 s, sin sonido, .mp4,
-     menos de 4 MB), subidlo a assets/video/ y escribid aquí su ruta,
-     por ejemplo "assets/video/portada.mp4". Sustituye a las fotos.
-     [PENDIENTE: vídeo corto para la portada]
-     ------------------------------------------------------------------- */
-  portadaVideo: "",
-
-  /* -------------------------------------------------------------------
      2. CONTACTO Y BOOKING
      whatsapp: número con prefijo de país, sin espacios ni el signo +
      ------------------------------------------------------------------- */

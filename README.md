@@ -17,14 +17,13 @@ Es una web estática: no necesita servidor, base de datos ni instalar nada. Se p
 4. [Cambiar la live session de YouTube y los SoundCloud](#4-cambiar-la-live-session-de-youtube-y-los-soundcloud)
 5. [Cambiar los clubs de la cinta](#5-cambiar-los-clubs-de-la-cinta-que-se-mueve)
 6. [Cambiar o añadir fotos](#6-cambiar-o-añadir-fotos)
-7. [Poner un vídeo en la portada](#7-poner-un-vídeo-en-la-portada-opcional)
-8. [Cambiar textos (español e inglés)](#8-cambiar-textos-español-e-inglés)
-9. [El formulario de booking](#9-el-formulario-de-booking)
-10. [Cambiar el presskit en PDF](#10-cambiar-el-presskit-en-pdf)
-11. [Dónde está publicada](#11-dónde-está-publicada)
-12. [Usar un dominio propio](#12-usar-un-dominio-propio-opcional)
-13. [Pendientes](#13-pendientes)
-14. [Estructura de carpetas](#14-estructura-de-carpetas)
+7. [Cambiar textos (español e inglés)](#7-cambiar-textos-español-e-inglés)
+8. [El formulario de booking](#8-el-formulario-de-booking)
+9. [Cambiar el presskit en PDF](#9-cambiar-el-presskit-en-pdf)
+10. [Dónde está publicada](#10-dónde-está-publicada)
+11. [Usar un dominio propio](#11-usar-un-dominio-propio-opcional)
+12. [Pendientes](#12-pendientes)
+13. [Estructura de carpetas](#13-estructura-de-carpetas)
 
 ---
 
@@ -155,20 +154,9 @@ En `datos.js`, lista `galeria`, añade una línea:
 
 La galería se coloca sola en mosaico (2 columnas en móvil, 3 en ordenador).
 
-### Cambiar las fotos de la portada
+### La portada
 
-La portada es minimalista: en el **ordenador** se parte en dos (una foto a cada lado, Giselz y Rocco) y en el **móvil** se ve una sola foto del dúo. Se muestran en blanco y negro y oscurecidas, con el logo y el claim en el centro. Están en `datos.js`, bloque `portada`:
-
-```js
-portada: {
-  izquierda: { foto: "assets/img/portada-izquierda.webp", enfoque: "50% 46%" },
-  derecha:   { foto: "assets/img/portada-derecha.webp",   enfoque: "50% 36%" },
-  movil:     { foto: "assets/img/portada-movil.webp",     enfoque: "50% 32%" },
-},
-```
-
-- Mejor fotos **verticales**, de unos **1080 px de ancho**, con la persona centrada.
-- `enfoque` decide qué parte de la foto se ve si hay que recortar: el primer número es horizontal y el segundo vertical (`"50% 40%"` = centrada y un poco hacia arriba).
+La portada es negra, con el logo **RATTÄ MUSIK en 3D** (cromado, gira despacio y sigue al ratón). No lleva fotos, así que no hay nada que cambiar aquí. Si un móvil antiguo no puede mostrar el 3D, se ve el logo plano.
 
 ### Cambiar el resto de fotos
 
@@ -176,19 +164,7 @@ La forma más fácil es **subir la foto nueva con exactamente el mismo nombre** 
 
 ---
 
-## 7. Poner un vídeo en la portada (opcional)
-
-Si tenéis un vídeo corto de cabina, puede sustituir a las fotos de la portada:
-
-1. Que dure 10-20 segundos, sin sonido, en **.mp4** y que pese **menos de 4 MB** (se puede comprimir con [handbrake.fr](https://handbrake.fr), preset "Web").
-2. Créalo en `assets/video/portada.mp4` (Add file → Upload files; si la carpeta no existe, escribe `assets/video/` delante del nombre al subirlo).
-3. En `datos.js`: `portadaVideo: "assets/video/portada.mp4",`
-
-El vídeo se ve en blanco y negro, como las fotos. A quien tenga activado el ahorro de datos o el "movimiento reducido" se le siguen mostrando las fotos.
-
----
-
-## 8. Cambiar textos (español e inglés)
+## 7. Cambiar textos (español e inglés)
 
 - **Español:** está escrito directamente en [`index.html`](index.html). Busca la frase (Ctrl+F) y cámbiala con cuidado de no tocar lo que va entre `< >`.
 - **Inglés:** en [`assets/js/i18n.js`](assets/js/i18n.js). Cada texto tiene una "clave" (por ejemplo `"why.1"`) que es la misma que aparece en el HTML como `data-i18n="why.1"`.
@@ -197,7 +173,7 @@ La web se abre en español. Si el navegador del visitante no está en español, 
 
 ---
 
-## 9. El formulario de booking
+## 8. El formulario de booking
 
 GitHub Pages no tiene servidor, así que el formulario funciona así:
 
@@ -216,7 +192,7 @@ A partir de ahí, "Enviar por email" manda el mensaje directamente y muestra *"M
 
 ---
 
-## 10. Cambiar el presskit en PDF
+## 9. Cambiar el presskit en PDF
 
 El botón "Descargar presskit" descarga `assets/docs/ratta-musik-presskit.pdf`. Es el presskit original **sin la página de condiciones (tarifas)** y comprimido (2 MB en lugar de 22 MB).
 
@@ -224,7 +200,7 @@ Para actualizarlo: sube el PDF nuevo a `assets/docs/` con el mismo nombre. **Ojo
 
 ---
 
-## 11. Dónde está publicada
+## 10. Dónde está publicada
 
 La web se publica sola en dos sitios cada vez que cambia la rama `main`:
 
@@ -237,7 +213,7 @@ Tras cada cambio, en 1-2 minutos está publicado.
 
 ---
 
-## 12. Usar un dominio propio (opcional)
+## 11. Usar un dominio propio (opcional)
 
 Si compráis un dominio (por ejemplo `rattamusik.com`), lo más sencillo es conectarlo en **Vercel → el proyecto → Settings → Domains** y seguir los pasos que indica.
 
@@ -245,16 +221,15 @@ Después, sustituye `https://ratta-web.vercel.app/` por la nueva dirección en: 
 
 ---
 
-## 13. Pendientes
+## 12. Pendientes
 
 - **[PENDIENTE: fechas]** El presskit no incluye fechas. Mientras la lista esté vacía, la web muestra "Próximas fechas muy pronto".
-- **[PENDIENTE: vídeo corto para la portada]** Opcional; ver el punto 7.
-- **[PENDIENTE: formulario directo]** Opcional; ver Formspree en el punto 9.
-- **[PENDIENTE: dominio propio]** Opcional; ver el punto 12.
+- **[PENDIENTE: formulario directo]** Opcional; ver Formspree en el punto 8.
+- **[PENDIENTE: dominio propio]** Opcional; ver el punto 11.
 
 ---
 
-## 14. Estructura de carpetas
+## 13. Estructura de carpetas
 
 ```
 ratta-web/
@@ -267,6 +242,7 @@ ratta-web/
 └── assets/
     ├── css/styles.css    ← diseño (colores y tipografías arriba del todo)
     ├── js/main.js        ← animaciones e interacción (no hace falta tocarlo)
+    ├── js/hero3d.js      ← logo 3D de la portada (Three.js; fuente en js/src/)
     ├── js/i18n.js        ← textos en inglés
     ├── js/vendor/        ← Lenis (scroll suave, licencia MIT)
     ├── fonts/            ← Inter Tight y DM Mono (licencia SIL OFL)
@@ -277,11 +253,12 @@ ratta-web/
 
 ### Diseño, en una línea
 
-Minimalista y de club: negro (`#09080b`), fotografía en blanco y negro con flash y grano, un único acento lila sacado del presskit (`#cb6ce6`) que aparece en detalles y al pasar el ratón por las fotos, titulares en **Inter Tight** (grotesca muy pesada, en mayúsculas) y datos en **DM Mono**. La pantalla partida en dos y el "B2B" juegan con *"la energía fluye por dos bandos"*.
+Minimalista y de club: portada negra con el logo **RATTÄ MUSIK en 3D cromado** (refleja barras de luz y un toque lila, gira despacio, sigue al ratón y se aleja al hacer scroll), fotografía en blanco y negro con grano en el resto de la web, un único acento lila sacado del presskit (`#cb6ce6`), titulares en **Inter Tight** (grotesca muy pesada, en mayúsculas) y datos en **DM Mono**. El "Lado A / Lado B" y el "B2B" juegan con *"la energía fluye por dos bandos"*.
 
 ### Para quien sepa programar
 
-- Sin build: HTML + CSS + JS sin dependencias salvo Lenis (alojado en el repo).
+- Sin build para editar: HTML + CSS + JS, con Lenis alojado en el repo.
+- El logo 3D (`assets/js/hero3d.js`) es Three.js empaquetado con esbuild. Su código fuente está en `assets/js/src/hero3d.src.js`; para recompilarlo: `npm i three esbuild` y `npx esbuild assets/js/src/hero3d.src.js --bundle --minify --format=esm --outfile=assets/js/hero3d.js`.
 - Para probarla en local: `npx http-server .` (o cualquier servidor estático) y abrir `http://localhost:8080`.
-- Las fotos se procesaron desde el presskit con ImageMagick/Pillow: b/n con curva sigmoidal (portada) y duotono violeta (negro `#050109` → `#7d3aa3` → `#f7eefb`, mezclado al 75 % con la foto desaturada) para el resto, que se muestra en b/n con `filter: grayscale()` y recupera el violeta al pasar el ratón.
+- Las fotos se procesaron desde el presskit con ImageMagick/Pillow: duotono violeta (negro `#050109` → `#7d3aa3` → `#f7eefb`, mezclado al 75 % con la foto desaturada) que la web muestra en b/n con `filter: grayscale()` y recupera el violeta al pasar el ratón.
 - Respeta `prefers-reduced-motion` (sin loader, sin scroll suave, sin cursor ni animaciones). Sin JavaScript se ve el contenido escrito en `index.html`; las listas que salen de `datos.js` (cinta de clubs, fechas, SoundCloud y galería) necesitan JavaScript.
