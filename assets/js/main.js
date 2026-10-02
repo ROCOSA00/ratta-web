@@ -124,9 +124,6 @@
     if (C.whatsapp) {
       $$('[data-contact="whatsapp"], #waBtn').forEach((a) => { a.href = 'https://wa.me/' + C.whatsapp; });
     }
-    if (C.telefonoVisible) {
-      $$('[data-contact="phone"], #waNumber').forEach((s) => { s.textContent = C.telefonoVisible; });
-    }
     const y = $('#year');
     if (y) y.textContent = String(new Date().getFullYear());
   }
@@ -791,7 +788,7 @@
 
       if (via === 'whatsapp') {
         say(tr('form.openingWa'));
-        window.open('https://wa.me/' + (C.whatsapp || '34652932722') + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+        window.open('https://wa.me/' + C.whatsapp + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
         return;
       }
       if (endpoint) {

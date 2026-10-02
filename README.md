@@ -80,8 +80,7 @@ En [`datos.js`](datos.js):
 ```js
 contacto: {
   email: "itsrattamusik@gmail.com",
-  whatsapp: "34652932722",        // con el 34 delante, sin espacios ni +
-  telefonoVisible: "652 932 722", // cómo se ve escrito en la web
+  whatsapp: "34652932722",        // con el 34 delante, sin espacios ni + (no se muestra en la web)
 },
 
 enlaces: {
@@ -178,7 +177,7 @@ La web se abre en español. Si el navegador del visitante no está en español, 
 GitHub Pages no tiene servidor, así que el formulario funciona así:
 
 - **"Enviar por email"** abre la app de correo del visitante con el email a `itsrattamusik@gmail.com` ya escrito (nombre, tipo de evento, fecha, ciudad y mensaje). Solo tiene que darle a enviar.
-- **"Enviar por WhatsApp"** abre WhatsApp con el mismo mensaje dirigido al 652 932 722.
+- **"Enviar por WhatsApp"** abre WhatsApp con el mismo mensaje, dirigido al número de `contacto.whatsapp` (el número no aparece escrito en la web).
 
 **Opcional, recibir el formulario sin que salga de la web:**
 
