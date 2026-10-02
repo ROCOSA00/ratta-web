@@ -157,19 +157,17 @@ La galería se coloca sola en mosaico (2 columnas en móvil, 3 en ordenador).
 
 ### Cambiar las fotos de la portada
 
-La portada va cambiando entre fotos de cabina en blanco y negro, con cortes secos a ritmo (124 BPM). Están en `datos.js`, lista `portada`:
+La portada es minimalista: en el **ordenador** se parte en dos (una foto a cada lado, Giselz y Rocco) y en el **móvil** se ve una sola foto del dúo. Se muestran en blanco y negro y oscurecidas, con el logo y el claim en el centro. Están en `datos.js`, bloque `portada`:
 
 ```js
-portada: [
-  { foto: "assets/img/portada-1.webp", enfoque: "50% 42%" },
-  { foto: "assets/img/portada-2.webp", enfoque: "50% 44%" },
-  ...
-],
+portada: {
+  izquierda: { foto: "assets/img/portada-izquierda.webp", enfoque: "50% 46%" },
+  derecha:   { foto: "assets/img/portada-derecha.webp",   enfoque: "50% 36%" },
+  movil:     { foto: "assets/img/portada-movil.webp",     enfoque: "50% 32%" },
+},
 ```
 
-- En el **móvil** salen todas, una detrás de otra.
-- En el **ordenador** la pantalla se parte en dos: las fotos 1, 3, 5… van a la izquierda y las 2, 4, 6… a la derecha. Por eso conviene ponerlas **por parejas** (por ejemplo: Giselz a un lado y Rocco al otro).
-- Mejor fotos **verticales**, en **blanco y negro**, de unos **1080 px de ancho**.
+- Mejor fotos **verticales**, de unos **1080 px de ancho**, con la persona centrada.
 - `enfoque` decide qué parte de la foto se ve si hay que recortar: el primer número es horizontal y el segundo vertical (`"50% 40%"` = centrada y un poco hacia arriba).
 
 ### Cambiar el resto de fotos

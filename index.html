@@ -33,7 +33,8 @@
 
   <link rel="preload" href="assets/fonts/inter-tight-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" type="image/webp" href="assets/img/portada-1.webp" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" href="assets/img/portada-movil.webp" media="(max-aspect-ratio: 1/1), (max-width: 699px)" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" href="assets/img/portada-izquierda.webp" media="(min-aspect-ratio: 1/1) and (min-width: 700px)" fetchpriority="high">
 
   <link rel="stylesheet" href="assets/css/styles.css">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
@@ -102,7 +103,7 @@
       <span aria-hidden="true">/</span>
       <button type="button" class="lang__btn" data-lang="en" aria-pressed="false">EN</button>
     </div>
-    <a class="btn btn--sm btn--solid header__cta" href="#booking" data-magnetic data-i18n="nav.booking">Booking</a>
+    <a class="btn btn--sm btn--ghost header__cta" href="#booking" data-magnetic data-i18n="nav.booking">Booking</a>
     <button class="burger mono" type="button" id="burger" aria-expanded="false" aria-controls="menu">
       <span class="burger__label" data-i18n="nav.menu">Menú</span>
       <span class="burger__lines" aria-hidden="true"><i></i><i></i></span>
@@ -132,35 +133,38 @@
 
   <!-- ============ PORTADA ============ -->
   <section class="hero" id="inicio" aria-label="RATTA MUSIK">
-    <!-- Las fotos de la portada se cambian en datos.js (portada). Esta primera se ve también sin JavaScript. -->
-    <div class="hero__stage" id="heroStage" aria-hidden="true">
-      <div class="hero__side hero__side--l">
-        <img class="hero__frame is-on" src="assets/img/portada-1.webp" width="1080" height="1920" alt="" fetchpriority="high" decoding="async" style="--fy:42%">
-      </div>
-      <div class="hero__side hero__side--r"></div>
+    <!-- Las fotos de la portada se cambian en datos.js (portada). -->
+    <div class="hero__media" id="heroMedia" aria-hidden="true">
+      <picture class="hero__pic hero__pic--l">
+        <source media="(min-aspect-ratio: 1/1) and (min-width: 700px)" srcset="assets/img/portada-izquierda.webp">
+        <img src="assets/img/portada-movil.webp" width="1066" height="1600" alt="" fetchpriority="high" decoding="async">
+      </picture>
+      <picture class="hero__pic hero__pic--r">
+        <source media="(min-aspect-ratio: 1/1) and (min-width: 700px)" srcset="assets/img/portada-derecha.webp">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" width="800" height="1200" alt="" decoding="async">
+      </picture>
       <div class="hero__shade"></div>
     </div>
 
-    <div class="hero__content">
+    <div class="hero__center">
+      <h1 class="hero__brand">
+        <span class="sr-only">RATTA MUSIK · dj live sessions</span>
+        <svg class="hero__logo" viewBox="0 0 372.9 152.4" aria-hidden="true"><use href="#logo-ratta"/></svg>
+        <svg class="hero__musik" viewBox="0 0 58.6 18.2" aria-hidden="true"><use href="#logo-musik"/></svg>
+      </h1>
       <p class="claim" id="claim">
         <s class="claim__old"><span data-i18n="claim.old">Ponemos música de</span></s>
         <span class="claim__new"><span data-i18n="claim.new">Diseñamos el</span> <em data-i18n="claim.big">ambiente</em></span>
       </p>
-      <div class="hero__actions">
-        <a class="btn btn--solid" href="#booking" data-magnetic><span data-i18n="hero.booking">Booking</span> <span aria-hidden="true">↗</span></a>
-        <a class="btn btn--ghost" href="#sesiones" id="heroPlay" data-magnetic>
-          <span class="btn__play" aria-hidden="true"></span><span data-i18n="hero.live">Live session</span>
-        </a>
-      </div>
-      <h1 class="hero__brand">
-        <span class="sr-only">RATTA MUSIK · dj live sessions</span>
-        <svg class="hero__logo" viewBox="0 0 372.9 152.4" aria-hidden="true"><use href="#logo-ratta"/></svg>
-        <span class="hero__sub mono" aria-hidden="true">
-          <svg viewBox="0 0 157.2 28.1"><use href="#logo-djls"/></svg>
-          <span>Rocco b2b Giselz</span>
-          <svg viewBox="0 0 58.6 18.2"><use href="#logo-musik"/></svg>
-        </span>
-      </h1>
+    </div>
+
+    <div class="hero__foot">
+      <p class="hero__credit mono"><span>Rocco b2b Giselz</span><span>DJ live sessions</span></p>
+      <span class="hero__scroll" aria-hidden="true"></span>
+      <nav class="hero__links mono" aria-label="Accesos rápidos">
+        <a href="#booking" data-magnetic><span data-i18n="hero.booking">Booking</span> <span aria-hidden="true">↗</span></a>
+        <a href="#sesiones" id="heroPlay" data-magnetic><span data-i18n="hero.live">Live session</span> <span aria-hidden="true">▶</span></a>
+      </nav>
     </div>
   </section>
 
@@ -234,16 +238,15 @@
     <h2 class="why__title" id="whyTitle" data-reveal="lines" data-i18n="why.title">¿Por qué <em class="acc">dos</em> DJs y no solo uno?</h2>
 
     <ol class="why__list" id="whyList">
-      <li class="why__item" data-img="assets/img/duo-cabina-b-640.webp"><span class="why__n mono">01</span><span class="why__t" data-i18n="why.1">Más energía en la cabina</span></li>
-      <li class="why__item" data-img="assets/img/giselz-cabina-640.webp"><span class="why__n mono">02</span><span class="why__t" data-i18n="why.2">Mayor lectura del público</span></li>
-      <li class="why__item" data-img="assets/img/rocco-jaleo-640.webp"><span class="why__n mono">03</span><span class="why__t" data-i18n="why.3">Variedad musical</span></li>
-      <li class="why__item" data-img="assets/img/rocco-cabina-640.webp"><span class="why__n mono">04</span><span class="why__t" data-i18n="why.4">Transiciones creativas</span></li>
-      <li class="why__item" data-img="assets/img/duo-retrato-640.webp"><span class="why__n mono">05</span><span class="why__t" data-i18n="why.5">Imagen atractiva del local</span></li>
-      <li class="why__item" data-img="assets/img/duo-cabina-a-640.webp"><span class="why__n mono">06</span><span class="why__t" data-i18n="why.6">Valor para el recinto</span></li>
-      <li class="why__item" data-img="assets/img/giselz-flash-354.webp"><span class="why__n mono">07</span><span class="why__t" data-i18n="why.7">Diferenciación en redes sociales</span></li>
-      <li class="why__item" data-img="assets/img/live-session-640.webp"><span class="why__n mono">08</span><span class="why__t" data-i18n="why.8">Impacto y experiencia visual para el cliente</span></li>
+      <li class="why__item"><span class="why__n mono">01</span><span class="why__t" data-i18n="why.1">Más energía en la cabina</span></li>
+      <li class="why__item"><span class="why__n mono">02</span><span class="why__t" data-i18n="why.2">Mayor lectura del público</span></li>
+      <li class="why__item"><span class="why__n mono">03</span><span class="why__t" data-i18n="why.3">Variedad musical</span></li>
+      <li class="why__item"><span class="why__n mono">04</span><span class="why__t" data-i18n="why.4">Transiciones creativas</span></li>
+      <li class="why__item"><span class="why__n mono">05</span><span class="why__t" data-i18n="why.5">Imagen atractiva del local</span></li>
+      <li class="why__item"><span class="why__n mono">06</span><span class="why__t" data-i18n="why.6">Valor para el recinto</span></li>
+      <li class="why__item"><span class="why__n mono">07</span><span class="why__t" data-i18n="why.7">Diferenciación en redes sociales</span></li>
+      <li class="why__item"><span class="why__n mono">08</span><span class="why__t" data-i18n="why.8">Impacto y experiencia visual para el cliente</span></li>
     </ol>
-    <div class="why__float" id="whyFloat" aria-hidden="true"><img alt=""></div>
   </section>
 
   <!-- ============ LIVE SESSIONS ============ -->
