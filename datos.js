@@ -34,11 +34,11 @@ window.RATTA = {
   /* -------------------------------------------------------------------
      2. CONTACTO Y BOOKING
      whatsapp: número con prefijo de país, sin espacios ni el signo +
+               (no se muestra escrito en la web: solo lo usa el botón de WhatsApp)
      ------------------------------------------------------------------- */
   contacto: {
     email: "itsrattamusik@gmail.com",
     whatsapp: "34652932722",
-    telefonoVisible: "652 932 722",
   },
 
   /* Formulario de booking.
