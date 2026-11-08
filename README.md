@@ -21,7 +21,7 @@ Es una web estática: no necesita servidor, base de datos ni instalar nada. Se p
 8. [El formulario de booking](#8-el-formulario-de-booking)
 9. [Cambiar el presskit en PDF](#9-cambiar-el-presskit-en-pdf)
 10. [Dónde está publicada](#10-dónde-está-publicada)
-11. [Usar un dominio propio](#11-usar-un-dominio-propio-opcional)
+11. [El dominio](#11-el-dominio)
 12. [Pendientes](#12-pendientes)
 13. [Estructura de carpetas](#13-estructura-de-carpetas)
 
@@ -199,22 +199,17 @@ Para actualizarlo: sube el PDF nuevo a `assets/docs/` con el mismo nombre. **Ojo
 
 ## 10. Dónde está publicada
 
-La web se publica sola en dos sitios cada vez que cambia la rama `main`:
+La web está en **https://www.rattamusik.com/** (alojada en Vercel). `rattamusik.com` sin "www" redirige ahí solo.
 
-- **Vercel (principal):** https://ratta-web.vercel.app/ — es la dirección que usan Google y la vista previa al compartir el enlace.
-- **GitHub Pages (copia):** https://rocosa00.github.io/ratta-web/ — se activa en **Settings → Pages → Source: Deploy from a branch → Branch: `main` · `/ (root)` → Save**.
-
-Tras cada cambio, en 1-2 minutos está publicado.
+Cada cambio que se guarda en la rama `main` se publica automáticamente en 1-2 minutos.
 
 **Al compartir el enlace** por WhatsApp o redes sale la imagen [`assets/img/og-image.jpg`](assets/img/og-image.jpg) con el logo y "Diseñamos el AMBIENTE". WhatsApp guarda en caché la vista previa: si cambiáis la imagen, puede tardar unos días en actualizarse.
 
 ---
 
-## 11. Usar un dominio propio (opcional)
+## 11. El dominio
 
-Si compráis un dominio (por ejemplo `rattamusik.com`), lo más sencillo es conectarlo en **Vercel → el proyecto → Settings → Domains** y seguir los pasos que indica.
-
-Después, sustituye `https://ratta-web.vercel.app/` por la nueva dirección en: `index.html` (líneas de `canonical`, `og:url`, `og:image`, `twitter:image` y el bloque `application/ld+json`), `robots.txt` y `sitemap.xml`. La página `404.html` no hay que tocarla: funciona en cualquier dirección.
+El dominio `rattamusik.com` está conectado en **Vercel → el proyecto → Settings → Domains**. Si algún día cambia la dirección principal, sustituye `https://www.rattamusik.com/` por la nueva en: `index.html` (líneas de `canonical`, `og:url`, `og:image`, `twitter:image` y el bloque `application/ld+json`), `robots.txt` y `sitemap.xml`. La página `404.html` no hay que tocarla: funciona en cualquier dirección.
 
 ---
 
@@ -222,7 +217,6 @@ Después, sustituye `https://ratta-web.vercel.app/` por la nueva dirección en: 
 
 - **[PENDIENTE: fechas]** El presskit no incluye fechas. Mientras la lista esté vacía, la web muestra "Próximas fechas muy pronto".
 - **[PENDIENTE: formulario directo]** Opcional; ver Formspree en el punto 8.
-- **[PENDIENTE: dominio propio]** Opcional; ver el punto 11.
 
 ---
 
