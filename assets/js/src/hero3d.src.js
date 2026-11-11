@@ -1,6 +1,7 @@
 /* RATTA MUSIK · logo 3D de la portada (Three.js)
    Fuente sin empaquetar. Se compila a assets/js/hero3d.js con esbuild:
    npx esbuild hero3d.src.js --bundle --minify --format=esm --outfile=assets/js/hero3d.js
+   En el móvil no se carga: se ve un vídeo grabado de este mismo logo (assets/video/).
 */
 import {
   WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, ExtrudeGeometry, MeshPhysicalMaterial,
@@ -11,6 +12,8 @@ import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const easeOutExpo = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x));
+// el balanceo se repite exacto cada 15 s: así el vídeo del móvil hace un bucle perfecto
+const LOOP = (Math.PI * 2) / 15;
 
 function shapesFrom(d) {
   const data = new SVGLoader().parse('<svg xmlns="http://www.w3.org/2000/svg"><path d="' + d + '"/></svg>');
@@ -60,7 +63,7 @@ export function initHero3D(opts) {
   const { canvas, wordmark, musik, anchor, hero, reduced, onShow } = opts;
   let shown = false;
   const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, opts.maxDpr || 1.5));
   renderer.toneMapping = ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.outputColorSpace = SRGBColorSpace;
@@ -78,12 +81,12 @@ export function initHero3D(opts) {
   // RATTÄ (unidades del SVG: 372.9 × 152.4) y MUSIK colocado como en el presskit
   const logo = new Group();
   const wm = new Mesh(new ExtrudeGeometry(shapesFrom(wordmark), {
-    depth: 30, bevelEnabled: true, bevelThickness: 3.2, bevelSize: 1.8, bevelSegments: 6, curveSegments: 20,
+    depth: 30, bevelEnabled: true, bevelThickness: 3.2, bevelSize: 1.8, bevelSegments: 6, curveSegments: 12,
   }), chrome);
   logo.add(wm);
   if (musik) {
     const mk = new Mesh(new ExtrudeGeometry(shapesFrom(musik), {
-      depth: 14, bevelEnabled: true, bevelThickness: 1.6, bevelSize: 0.9, bevelSegments: 4, curveSegments: 14,
+      depth: 14, bevelEnabled: true, bevelThickness: 1.6, bevelSize: 0.9, bevelSegments: 4, curveSegments: 10,
     }), chrome);
     const s = 2.04; // escala del lockup de la página 3 del presskit
     mk.scale.set(s, s, 1);
@@ -152,9 +155,9 @@ export function initHero3D(opts) {
     const s = clamp(window.scrollY / H, 0, 1.2);
     const idle = reduced ? 0 : 1;
 
-    rig.rotation.y = (1 - intro) * -Math.PI * 0.85 + idle * (Math.sin(t * 0.42) * 0.24 + px * 0.3);
-    rig.rotation.x = idle * (Math.sin(t * 0.31) * 0.035 + py * 0.06 + s * 0.9);
-    rig.position.y = baseY + idle * (Math.sin(t * 0.8) * 3 + s * size.y * 0.9);
+    rig.rotation.y = (1 - intro) * -Math.PI * 0.85 + idle * (Math.sin(t * LOOP) * 0.24 + px * 0.3);
+    rig.rotation.x = idle * (Math.cos(t * LOOP) * 0.035 + py * 0.06 + s * 0.9);
+    rig.position.y = baseY + idle * (Math.sin(t * LOOP * 2) * 3 + s * size.y * 0.9);
     const sc = (0.72 + 0.28 * intro) * (1 - idle * s * 0.25);
     rig.scale.setScalar(sc);
     canvas.style.opacity = String(intro * clamp(1 - s * 1.1, 0, 1));

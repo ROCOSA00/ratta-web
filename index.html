@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>RATTA MUSIK · Rocco &amp; Giselz · DJ live sessions</title>
-  <meta name="description" content="Ratta Musik es el dúo de DJs formado por Rocco y Giselz. La energía fluye por dos bandos: no ponemos música, diseñamos el ambiente. Live sessions, fechas y booking.">
+  <meta name="description" content="Ratta Musik es el dúo de DJs de Rocco y Giselz. La energía fluye por dos bandos: no ponemos música, diseñamos el ambiente. Live sessions, fechas y booking.">
   <meta name="theme-color" content="#0b0710">
   <meta name="color-scheme" content="dark">
   <link rel="canonical" href="https://www.rattamusik.com/">
@@ -33,7 +33,6 @@
 
   <link rel="preload" href="assets/fonts/inter-tight-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/dm-mono-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="modulepreload" href="assets/js/hero3d.js">
 
   <link rel="stylesheet" href="assets/css/styles.css">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
@@ -180,7 +179,7 @@
         <div class="duo__photo-inner" data-parallax="-0.08">
           <img src="assets/img/duo-retrato-640.webp"
                srcset="assets/img/duo-retrato-640.webp 640w, assets/img/duo-retrato-1066.webp 1066w"
-               sizes="(min-width: 900px) 34vw, 70vw" width="1066" height="1600" loading="lazy" decoding="async"
+               sizes="(min-width: 900px) 40vw, 84vw" width="1066" height="1600" loading="lazy" decoding="async"
                alt="Rocco y Giselz abrazados en la pista, haciendo el signo de la paz" data-i18n-alt="duo.alt" class="bw">
         </div>
         <figcaption class="mono"><span>A</span><span class="duo__cap-line"></span><span>B</span></figcaption>
@@ -192,7 +191,7 @@
       <article class="side side--a" tabindex="0" aria-label="Rocco">
         <img class="side__img" src="assets/img/rocco-cabina-640.webp"
              srcset="assets/img/rocco-cabina-640.webp 640w, assets/img/rocco-cabina-800.webp 800w"
-             sizes="(min-width: 900px) 50vw, 60vw" width="800" height="1200" loading="lazy" decoding="async"
+             sizes="(min-width: 900px) 60vw, 80vw" width="800" height="1200" loading="lazy" decoding="async"
              alt="Rocco a los platos" data-i18n-alt="side.a.alt">
         <div class="side__body">
           <span class="side__tag mono" data-i18n="side.a.tag">Lado A</span>
@@ -204,8 +203,8 @@
       <div class="sides__b2b mono" aria-hidden="true"><span>B2B</span></div>
       <article class="side side--b" tabindex="0" aria-label="Giselz">
         <img class="side__img" src="assets/img/giselz-cabina-640.webp"
-             srcset="assets/img/giselz-cabina-640.webp 640w, assets/img/giselz-cabina-1200.webp 1200w"
-             sizes="(min-width: 900px) 50vw, 60vw" width="1200" height="1799" loading="lazy" decoding="async"
+             srcset="assets/img/giselz-cabina-640.webp 640w, assets/img/giselz-cabina-900.webp 900w, assets/img/giselz-cabina-1200.webp 1200w"
+             sizes="(min-width: 900px) 60vw, 80vw" width="1200" height="1799" loading="lazy" decoding="async"
              alt="Giselz a los platos" data-i18n-alt="side.b.alt">
         <div class="side__body">
           <span class="side__tag mono" data-i18n="side.b.tag">Lado B</span>
@@ -249,7 +248,8 @@
     <div class="sessions__grid">
       <div class="video-col">
       <div class="video" id="video" data-reveal="clip">
-        <button class="video__facade" type="button" id="videoFacade" data-cursor="play" aria-label="Reproducir la live session en YouTube">
+        <button class="video__facade" type="button" id="videoFacade" data-cursor="play">
+          <span class="sr-only" data-i18n="sessions.playVideo">Reproducir la live session en YouTube</span>
           <img id="videoPoster" src="assets/img/live-session-1184.webp" srcset="assets/img/live-session-640.webp 640w, assets/img/live-session-1184.webp 1184w"
                sizes="(min-width: 900px) 62vw, 100vw" width="1184" height="662" loading="lazy" decoding="async" alt="" class="bw">
           <span class="video__play" aria-hidden="true">
@@ -411,6 +411,7 @@
     <span>© <span id="year">2026</span> Ratta Musik</span>
     <span>dj live sessions</span>
     <span data-i18n="footer.b2b">Rocco b2b Giselz</span>
+    <a href="legal.html" data-i18n="footer.legal">Aviso legal y privacidad</a>
   </div>
 </footer>
 
@@ -426,9 +427,11 @@
 <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><span class="cursor__label" id="cursorLabel"></span></span></div>
 <div class="grain" aria-hidden="true"></div>
 
-<script src="datos.js"></script>
+<script src="datos.js" defer></script>
 <script src="assets/js/vendor/lenis.min.js" defer></script>
 <script src="assets/js/i18n.js" defer></script>
 <script src="assets/js/main.js" defer></script>
+<!-- Estadísticas de visitas de Vercel (sin cookies) -->
+<script src="/_vercel/insights/script.js" defer></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 Web de **RATTA MUSIK**, el dúo de DJs formado por **Rocco** ([@djroccolive](https://www.instagram.com/djroccolive/)) y **Giselz** ([@giseeelz](https://www.instagram.com/giseeelz/)).
 *Ponemos música de* → **Diseñamos el AMBIENTE.**
 
-Es una web estática: no necesita servidor, base de datos ni instalar nada. Se publica gratis con GitHub Pages.
+Es una web estática: no necesita servidor, base de datos ni instalar nada. Está publicada en Vercel: **https://www.rattamusik.com/**
 
 > **Lo más importante:** para cambiar fechas, enlaces, sesiones, clubs y fotos solo hay que tocar **un archivo: [`datos.js`](datos.js)**.
 
@@ -22,8 +22,10 @@ Es una web estática: no necesita servidor, base de datos ni instalar nada. Se p
 9. [Cambiar el presskit en PDF](#9-cambiar-el-presskit-en-pdf)
 10. [Dónde está publicada](#10-dónde-está-publicada)
 11. [El dominio](#11-el-dominio)
-12. [Pendientes](#12-pendientes)
-13. [Estructura de carpetas](#13-estructura-de-carpetas)
+12. [Aviso legal y privacidad](#12-aviso-legal-y-privacidad)
+13. [Estadísticas de visitas](#13-estadísticas-de-visitas)
+14. [Pendientes](#14-pendientes)
+15. [Estructura de carpetas](#15-estructura-de-carpetas)
 
 ---
 
@@ -154,11 +156,15 @@ La galería se coloca sola en mosaico (2 columnas en móvil, 3 en ordenador).
 
 ### La portada
 
-La portada es negra, con el logo **RATTÄ MUSIK en 3D** (cromado, gira despacio y sigue al ratón). No lleva fotos, así que no hay nada que cambiar aquí. Si un móvil antiguo no puede mostrar el 3D, se ve el logo plano.
+La portada es negra, con el logo **RATTÄ MUSIK en cromo** y un halo lila. No lleva fotos, así que no hay nada que cambiar aquí.
+
+- **En ordenador** es 3D de verdad: gira despacio, sigue al ratón y se aleja al bajar.
+- **En móvil y tablet** es un vídeo en bucle de ese mismo logo 3D (`assets/video/hero-logo-v1.mp4`, 0,5 MB). Así carga rápido y no gasta batería.
+- Si el móvil tiene activado *reducir movimiento* o *ahorro de datos*, se ve una imagen fija del logo en cromo. Si el iPhone está en *modo de bajo consumo* (que bloquea los vídeos automáticos) o algo falla, se ve el logo plano.
 
 ### Cambiar el resto de fotos
 
-La forma más fácil es **subir la foto nueva con exactamente el mismo nombre** que la que quieres sustituir (GitHub la reemplaza).
+La forma más fácil es **subir la foto nueva con exactamente el mismo nombre** que la que quieres sustituir (GitHub la reemplaza). Quien ya haya visitado la web puede seguir viendo la foto antigua hasta un día (el navegador la guarda para cargar más rápido); si queréis que se vea al momento, subidla con un nombre nuevo y cambiad el nombre en `datos.js`.
 
 ---
 
@@ -173,7 +179,7 @@ La web se abre en español. Si el navegador del visitante no está en español, 
 
 ## 8. El formulario de booking
 
-GitHub Pages no tiene servidor, así que el formulario funciona así:
+La web no tiene servidor, así que el formulario funciona así:
 
 - **"Enviar por email"** abre la app de correo del visitante con el email a `itsrattamusik@gmail.com` ya escrito (nombre, tipo de evento, fecha, ciudad y mensaje). Solo tiene que darle a enviar.
 
@@ -213,27 +219,58 @@ El dominio `rattamusik.com` está conectado en **Vercel → el proyecto → Sett
 
 ---
 
-## 12. Pendientes
+## 12. Aviso legal y privacidad
+
+La página [`legal.html`](legal.html) (enlazada abajo del todo en la web) tiene el aviso legal, la política de privacidad y la de cookies. La ley española (LSSI) obliga a poner los datos de quien está detrás de la web. Se rellenan en **`datos.js`**, en el bloque `legal`:
+
+```js
+legal: {
+  titular: "Nombre Apellido Apellido",
+  nif: "12345678Z",
+  domicilio: "Calle, número, código postal y ciudad",
+},
+```
+
+Mientras estén vacíos, la página muestra **[PENDIENTE]** en lila.
+
+---
+
+## 13. Estadísticas de visitas
+
+La web lleva **Vercel Web Analytics**: cuenta visitas, páginas, países y dispositivos **sin cookies** (por eso no hace falta el típico aviso de cookies).
+
+**Hay que activarlo una vez:** Vercel → proyecto `ratta-web` → pestaña **Analytics** → **Enable**. Las cifras aparecen en esa misma pestaña. Mientras no esté activado, la web funciona igual pero no cuenta nada.
+
+---
+
+## 14. Pendientes
 
 - **[PENDIENTE: fechas]** El presskit no incluye fechas. Mientras la lista esté vacía, la web muestra "Próximas fechas muy pronto".
+- **[PENDIENTE: datos del titular]** Nombre, NIF y domicilio para el aviso legal (punto 12).
+- **[PENDIENTE: estadísticas]** Activar Vercel Web Analytics (punto 13).
+- **[PENDIENTE: ciudad de The Pink Elephant]** La sesión "The Ratta House #002" pone *"at The Pink Elephant · 23.06.2026"* sin ciudad.
 - **[PENDIENTE: formulario directo]** Opcional; ver Formspree en el punto 8.
 
 ---
 
-## 13. Estructura de carpetas
+## 15. Estructura de carpetas
 
 ```
 ratta-web/
 ├── index.html            ← la web (textos en español)
 ├── datos.js              ← TODO lo editable: fechas, enlaces, sesiones, clubs, galería
 ├── README.md             ← este archivo
+├── legal.html            ← aviso legal, privacidad y cookies (datos del titular en datos.js)
 ├── 404.html              ← página de "no encontrada"
+├── vercel.json           ← caché y cabeceras de seguridad (no hace falta tocarlo)
 ├── favicon.ico / favicon.svg / apple-touch-icon.png
 ├── site.webmanifest, robots.txt, sitemap.xml, .nojekyll
 └── assets/
     ├── css/styles.css    ← diseño (colores y tipografías arriba del todo)
     ├── js/main.js        ← animaciones e interacción (no hace falta tocarlo)
-    ├── js/hero3d.js      ← logo 3D de la portada (Three.js; fuente en js/src/)
+    ├── js/hero3d.js      ← logo 3D de la portada en ordenador (Three.js; fuente en js/src/)
+    ├── js/legal.js       ← rellena legal.html con los datos de datos.js
+    ├── video/            ← vídeo del logo en cromo para la portada en móvil (+ imagen fija)
     ├── js/i18n.js        ← textos en inglés
     ├── js/vendor/        ← Lenis (scroll suave, licencia MIT)
     ├── fonts/            ← Inter Tight y DM Mono (licencia SIL OFL)
@@ -244,12 +281,14 @@ ratta-web/
 
 ### Diseño, en una línea
 
-Minimalista y de club: portada negra con el logo **RATTÄ MUSIK en 3D cromado** (refleja barras de luz y un toque lila, gira despacio, sigue al ratón y se aleja al hacer scroll), fotografía en blanco y negro con grano en el resto de la web, un único acento lila sacado del presskit (`#cb6ce6`), titulares en **Inter Tight** (grotesca muy pesada, en mayúsculas) y datos en **DM Mono**. El "Lado A / Lado B" y el "B2B" juegan con *"la energía fluye por dos bandos"*.
+Minimalista y de club: portada negra con el logo **RATTÄ MUSIK en 3D cromado** (refleja barras de luz y un toque lila, gira despacio, sigue al ratón y se aleja al hacer scroll; en móvil, el mismo logo en vídeo), fotografía en blanco y negro con grano en el resto de la web, un único acento lila sacado del presskit (`#cb6ce6`), titulares en **Inter Tight** (grotesca muy pesada, en mayúsculas) y datos en **DM Mono**. El "Lado A / Lado B" y el "B2B" juegan con *"la energía fluye por dos bandos"*.
 
 ### Para quien sepa programar
 
 - Sin build para editar: HTML + CSS + JS, con Lenis alojado en el repo.
-- El logo 3D (`assets/js/hero3d.js`) es Three.js empaquetado con esbuild. Su código fuente está en `assets/js/src/hero3d.src.js`; para recompilarlo: `npm i three esbuild` y `npx esbuild assets/js/src/hero3d.src.js --bundle --minify --format=esm --outfile=assets/js/hero3d.js`.
+- El logo 3D (`assets/js/hero3d.js`) es Three.js empaquetado con esbuild. Su código fuente está en `assets/js/src/hero3d.src.js`; para recompilarlo: `npm i three esbuild` y `npx esbuild assets/js/src/hero3d.src.js --bundle --minify --format=esm --outfile=assets/js/hero3d.js`. Se sirve con caché de un año: **al recompilar, sube el `?v=2` de la URL en `main.js`** (`initHero`).
+- Solo se carga en ordenador (`(min-width: 900px)` y puntero fino). En móvil/tablet `main.js` crea un `<video muted loop playsinline>` con `assets/video/hero-logo-v1.mp4`: 15 s a 30 fps, 1024×640, H.264 (BT.709). El balanceo del 3D se repite exacto cada 15 s, así que el vídeo hace un bucle perfecto. Se grabó fotograma a fotograma con el propio `hero3d.js` en Chromium sin pantalla (tiempo fijo, 2048×1280 y reducido a la mitad), se compuso sobre `#050406` con el halo lila (que en móvil va dentro del vídeo) y se codificó con `ffmpeg -c:v libx264 -preset veryslow -crf 27 -movflags +faststart`. Si se regenera, cambia el nombre a `-v2` (caché de un año).
+- `vercel.json` define la caché (fuentes, vendor, 3D y vídeo: un año; fotos y PDF: un día) y las cabeceras de seguridad. La CSP permite los scripts en línea por su hash SHA-256: **si cambias el `<script>` del `<head>` de `index.html` o el de `404.html`, recalcula su hash** (`echo -n '…contenido…' | openssl dgst -sha256 -binary | base64`) y sustitúyelo en `vercel.json`.
 - Para probarla en local: `npx http-server .` (o cualquier servidor estático) y abrir `http://localhost:8080`.
 - Las fotos se procesaron desde el presskit con ImageMagick/Pillow: duotono violeta (negro `#050109` → `#7d3aa3` → `#f7eefb`, mezclado al 75 % con la foto desaturada) que la web muestra en b/n con `filter: grayscale()` y recupera el violeta al pasar el ratón.
 - Respeta `prefers-reduced-motion` (sin loader, sin scroll suave, sin cursor ni animaciones). Sin JavaScript se ve el contenido escrito en `index.html`; las listas que salen de `datos.js` (cinta de clubs, fechas, SoundCloud y galería) necesitan JavaScript.
