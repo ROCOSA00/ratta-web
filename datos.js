@@ -48,6 +48,15 @@ window.RATTA = {
     endpoint: "",
   },
 
+  /* Datos del titular para la página "Aviso legal y privacidad" (legal.html).
+     La ley española (LSSI) obliga a mostrarlos. Rellenad los tres campos;
+     mientras estén vacíos, la página muestra [PENDIENTE]. */
+  legal: {
+    titular: "",    // nombre y apellidos (o razón social) de quien da de alta la actividad
+    nif: "",        // NIF / DNI / CIF
+    domicilio: "",  // dirección postal (calle, número, código postal y ciudad)
+  },
+
   /* -------------------------------------------------------------------
      3. REDES SOCIALES
      ------------------------------------------------------------------- */

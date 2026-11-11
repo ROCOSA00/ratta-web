@@ -109,6 +109,7 @@ window.RATTA_I18N = {
     "footer.contact": "Contact",
     "footer.presskit": "Presskit",
     "footer.b2b": "Rocco b2b Giselz",
+    "footer.legal": "Legal notice & privacy",
 
     "lb.close": "Close"
   },

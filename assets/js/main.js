@@ -60,8 +60,6 @@
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-pressed', String(on));
     });
-    const vf = $('#videoFacade');
-    if (vf) vf.setAttribute('aria-label', tr('sessions.playVideo'));
     renderDates();
     renderTracks();
     renderGallery();
@@ -222,13 +220,13 @@
 
     if (reduced || !count) {
       html.classList.add('is-loaded', 'is-ready');
-      hero3dReady.then(() => { if (hero3d) hero3d.start(); });
+      heroReady.then(() => { if (heroMedia) heroMedia.start(); });
       return Promise.resolve();
     }
     const seen = session.get('ratta-seen') === '1';
     session.set('ratta-seen', '1');
     const minTime = seen ? 350 : 1100;
-    const imgReady = hero3dReady;
+    const imgReady = heroReady;
     const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     let ready = false;
     Promise.race([Promise.all([imgReady, fontsReady]), new Promise((r) => setTimeout(r, 3500))]).then(() => { ready = true; });
@@ -246,7 +244,7 @@
         if (bar) bar.style.transform = 'scaleX(' + (p / 100) + ')';
         if (p >= 100) {
           html.classList.add('is-loaded');
-          if (hero3d) hero3d.start();
+          if (heroMedia) heroMedia.start();
           if (lenis) lenis.start();
           setTimeout(() => html.classList.add('is-ready'), 1150);
           resolve();
@@ -268,11 +266,17 @@
   }
 
   /* -------------------------------------------------------------------
-     PORTADA: logo RATTÄ MUSIK en 3D (assets/js/hero3d.js, Three.js).
-     Si el navegador no tiene WebGL o falla, se queda el logo plano.
+     PORTADA: logo RATTÄ MUSIK en cromo.
+     · Ordenador: 3D de verdad (assets/js/hero3d.js, Three.js) que sigue al ratón.
+     · Móvil y tablet: un vídeo en bucle de ese mismo logo (assets/video/),
+       que pesa menos y no gasta batería. Con "reducir movimiento" o
+       "ahorro de datos" se muestra una imagen fija.
+     Si algo falla, se queda el logo plano.
      ------------------------------------------------------------------- */
-  let hero3d = null;
-  let hero3dReady = Promise.resolve();
+  const HERO_VIDEO = 'assets/video/hero-logo-v1.mp4';
+  const HERO_STILL = 'assets/video/hero-logo-v1.webp';
+  let heroMedia = null; // { start() }
+  let heroReady = Promise.resolve();
 
   function webglOK() {
     try {
@@ -294,14 +298,17 @@
       });
     }
 
+    const touch = window.matchMedia('(max-width: 899px), (hover: none) and (pointer: coarse)').matches;
+    if (touch) { initHeroVideo(hero); return; }
+
     const canvas = $('#heroCanvas');
     const wordmark = $('#logo-ratta path');
     const musik = $('#logo-musik path');
     if (!canvas || !wordmark || !webglOK()) return;
 
-    const url = new URL('assets/js/hero3d.js', document.baseURI).href;
-    hero3dReady = import(url).then((mod) => {
-      hero3d = mod.initHero3D({
+    const url = new URL('assets/js/hero3d.js?v=2', document.baseURI).href;
+    heroReady = import(url).then((mod) => {
+      heroMedia = mod.initHero3D({
         canvas,
         hero,
         anchor: $('.hero__brand', hero),
@@ -311,8 +318,81 @@
         // el logo plano se queda hasta que el 3D pinta su primer fotograma
         onShow: () => hero.classList.add('has-3d'),
       });
-      if (html.classList.contains('is-loaded')) hero3d.start();
+      if (html.classList.contains('is-loaded')) heroMedia.start();
     }).catch(() => { /* sin 3D: se queda el logo plano */ });
+  }
+
+  function initHeroVideo(hero) {
+    const brand = $('.hero__brand', hero);
+    if (!brand) return;
+    hero.classList.add('is-video');
+    const wrap = document.createElement('div');
+    wrap.className = 'hero__vwrap';
+    wrap.setAttribute('aria-hidden', 'true');
+    const shown = () => hero.classList.add('has-video');
+    const conn = navigator.connection || {};
+
+    if (reduced || conn.saveData) {
+      // imagen fija del logo en cromo
+      const img = new Image();
+      img.className = 'hero__video';
+      img.alt = '';
+      img.decoding = 'async';
+      heroReady = new Promise((res) => {
+        img.onload = () => { shown(); res(); };
+        img.onerror = res;
+        setTimeout(res, 2500);
+      });
+      img.src = HERO_STILL;
+      wrap.appendChild(img);
+      brand.appendChild(wrap);
+      return;
+    }
+
+    const v = document.createElement('video');
+    v.className = 'hero__video';
+    v.muted = true;
+    v.defaultMuted = true;
+    v.loop = true;
+    v.playsInline = true;
+    v.preload = 'auto';
+    v.tabIndex = -1;
+    ['muted', 'playsinline', 'disablepictureinpicture', 'disableremoteplayback'].forEach((a) => v.setAttribute(a, ''));
+    heroReady = new Promise((res) => {
+      v.addEventListener('loadeddata', res, { once: true });
+      v.addEventListener('error', res, { once: true });
+      setTimeout(res, 2500);
+    });
+    v.addEventListener('playing', shown, { once: true });
+    v.src = HERO_VIDEO;
+    wrap.appendChild(v);
+    brand.appendChild(wrap);
+
+    // si iOS bloquea la reproducción (modo ahorro de batería) se queda el logo plano
+    let started = false;
+    let onScreen = true;
+    const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    heroMedia = { start() { started = true; if (onScreen) tryPlay(); } };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => {
+        onScreen = e.isIntersecting;
+        if (!started) return;
+        if (onScreen) tryPlay(); else v.pause();
+      }).observe(hero);
+    }
+
+    // al bajar, el logo se aleja y se desvanece (como el 3D del ordenador)
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const s = Math.min(1, Math.max(0, window.scrollY / (hero.offsetHeight || 1)));
+        wrap.style.setProperty('--hs', s.toFixed(3));
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   /* -------------------------------------------------------------------
@@ -530,9 +610,9 @@
     if (count) count.textContent = pad(list.length);
     ol.innerHTML = list.map((t, i) => (
       '<li class="track">' +
-        '<button class="track__btn" type="button" aria-expanded="false" data-url="' + esc(t.url) + '" aria-label="' + esc(tr('sessions.listen') + ': ' + t.titulo) + '">' +
-          '<span class="track__n mono">' + pad(i + 1) + '</span>' +
-          '<span class="track__title"><span class="track__name">' + esc(t.titulo) + '</span>' +
+        '<button class="track__btn" type="button" aria-expanded="false" data-url="' + esc(t.url) + '">' +
+          '<span class="track__n mono" aria-hidden="true">' + pad(i + 1) + '</span>' +
+          '<span class="track__title"><span class="sr-only">' + esc(tr('sessions.listen')) + ': </span><span class="track__name">' + esc(t.titulo) + '</span>' +
           (t.detalle ? '<span class="track__detail mono">' + esc(t.detalle) + '</span>' : '') + '</span>' +
           '<span class="track__icon" aria-hidden="true"></span>' +
         '</button>' +
@@ -555,7 +635,7 @@
       const player = $('.track__player', li);
       const f = document.createElement('iframe');
       f.title = 'SoundCloud · ' + btn.querySelector('.track__name').textContent;
-      f.allow = 'autoplay';
+      f.allow = 'autoplay; encrypted-media';
       f.loading = 'lazy';
       f.src = 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(btn.dataset.url) +
         '&color=%23cb6ce6&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false';
